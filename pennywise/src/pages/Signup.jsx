@@ -7,7 +7,7 @@ const Signup = () => {
     navigate("/login");
   };
   return (
-    <div className="flex justify-center items-center bg-background min-h-screen">
+    <div className="flex justify-center items-center bg-background min-h-screen  overflow-y-hidden">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div>
           <h2 className=" text-center text-3xl font-bold text-text">
