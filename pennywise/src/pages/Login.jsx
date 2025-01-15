@@ -9,7 +9,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
-        <div>
+        <div className="mb-4">
           <h2 className=" text-center text-3xl font-bold text-text">
             Welcome to <span className="font-pennywise">PennyWise</span>
           </h2>
@@ -22,15 +22,15 @@ const Login = () => {
                 className="block text-sm font-medium text-text"
               >
                 Email Address
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Enter your Email Address"
-                />
               </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                placeholder="Enter your Email Address"
+              />
             </div>
             <div>
               <label
@@ -38,15 +38,15 @@ const Login = () => {
                 className="block text-sm font-medium text-text"
               >
                 Password
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your Password"
-                />
               </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your Password"
+              />
             </div>
             <div className="flex justify-end">
               <button

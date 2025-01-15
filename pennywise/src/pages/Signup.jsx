@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -12,12 +14,41 @@ const Signup = () => {
             Sign Up for <span className="font-pennywise">PennyWise</span>
           </h2>
         </div>
-        <form className=" space-y-6">
+        <form className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
             <div>
-              <div className="flex flex-row space-x-3">
+              <div className="flex flex-row space-x-3 my-4">
                 <div>
-                  <label htmlFor="first-name"></label>
+                  <label
+                    htmlFor="first-name"
+                    className="block text-sm font-medium text-text"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="first"
+                    id="first"
+                    required
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your First Name"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="last-name"
+                    className="block text-sm font-medium text-text"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="last"
+                    id="last"
+                    required
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your Last Name"
+                  />
                 </div>
               </div>
               <label
@@ -25,15 +56,15 @@ const Signup = () => {
                 className="block text-sm font-medium text-text"
               >
                 Email Address
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Enter your Email Address"
-                />
               </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                placeholder="Enter your Email Address"
+              />
             </div>
             <div>
               <label
@@ -41,35 +72,44 @@ const Signup = () => {
                 className="block text-sm font-medium text-text"
               >
                 Password
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your Password"
-                />
               </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your Password"
+              />
             </div>
-            <div className="flex justify-end">
-              <button
-                className="text-secondary underline hover:cursor-pointer hover:text-purple-700"
-                type="button"
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-text"
               >
-                Forgot Password?
-              </button>
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name="cpassword"
+                id="cpassword"
+                required
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Confirm Password"
+              />
             </div>
-            <div className="flex space-x-4">
+
+            <div className="flex pt-4">
               <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-purple-700">
-                Login
+                Sign Up
               </button>
             </div>
           </div>
         </form>
-        <div className="flex justify-center items-center px-3">
-          <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
-          <span className="mx-2">Or</span>
-          <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
+        <div className="flex flex-row justify-center items-center px-3">
+          <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
+          <span className="mx-3">Or</span>
+          <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
         </div>
         <div className="m-3">
           <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ">
@@ -94,14 +134,14 @@ const Signup = () => {
             Sign in with Google
           </button>
         </div>
-        <div className="flex mx-3 mt-3 space-x-1 justify-center">
-          <div className="font-semibold">Don't have an account?</div>
+        <div className="flex mx-3 mt-5 space-x-1 justify-center">
+          <div className="font-semibold">Already have an account?</div>
           <button
             type="button"
             className="text-secondary font-bold hover:text-purple-700"
-            onClick={handleSignUp}
+            onClick={handleLogin}
           >
-            Sign Up
+            Login
           </button>
         </div>
       </div>
