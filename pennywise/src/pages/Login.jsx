@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignUp = () => {
     navigate("/signup");
@@ -39,25 +42,36 @@ const Login = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your Password"
-              />
+
+              <div className="flex relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="Enter your Password"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <Eye /> : <EyeOff />}
+                </button>
+              </div>
             </div>
             <div className="flex justify-end">
               <button
-                className="text-secondary underline hover:cursor-pointer hover:text-purple-700"
+                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary"
                 type="button"
               >
                 Forgot Password?
               </button>
             </div>
             <div className="flex space-x-4">
-              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-purple-700">
+              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary">
                 Login
               </button>
             </div>
@@ -95,7 +109,7 @@ const Login = () => {
           <div className="font-semibold">Don't have an account?</div>
           <button
             type="button"
-            className="text-secondary font-bold hover:text-purple-700"
+            className="text-secondary font-bold hover:text-hover_secondary"
             onClick={handleSignUp}
           >
             Sign Up

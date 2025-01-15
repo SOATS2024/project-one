@@ -7,9 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#2563eb", // Default Blue (Changeable)
-        secondary: "#9333ea", // Purple (Changeable)
-        background: "#f3f4f6", // Light Gray (Changeable)
+        primary: "#3d8351",
+        secondary: "#059669", 
+        background: "#ecfdf5",
+        hover_secondary: "#036345",
+        // primary: "#9c013a",
+        // secondary: "#cb014b",
+        // background: "#ffe6ef",
+        // hover_secondary: "#980138",
         text: "#1f2937",
       },
       fontFamily: {

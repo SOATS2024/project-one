@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
 
   const handleLogin = () => {
     navigate("/login");
@@ -30,7 +34,7 @@ const Signup = () => {
                     name="first"
                     id="first"
                     required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     placeholder="Enter your First Name"
                   />
                 </div>
@@ -46,7 +50,7 @@ const Signup = () => {
                     name="last"
                     id="last"
                     required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                     placeholder="Enter your Last Name"
                   />
                 </div>
@@ -73,14 +77,23 @@ const Signup = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your Password"
-              />
+              <div className="flex relative">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="Enter your Password"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <Eye /> : <EyeOff />}
+                </button>
+              </div>
             </div>
             <div>
               <label
@@ -89,18 +102,27 @@ const Signup = () => {
               >
                 Confirm Password
               </label>
-              <input
-                type="password"
-                name="cpassword"
-                id="cpassword"
-                required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Confirm Password"
-              />
+              <div className="flex relative">
+                <input
+                  type="password"
+                  name="cpassword"
+                  id="cpassword"
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="Confirm Password"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  onClick={() => setShowCPassword(!showCPassword)}
+                >
+                  {showCPassword ? <Eye /> : <EyeOff />}
+                </button>
+              </div>
             </div>
 
             <div className="flex pt-4">
-              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-purple-700">
+              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary">
                 Sign Up
               </button>
             </div>
@@ -138,7 +160,7 @@ const Signup = () => {
           <div className="font-semibold">Already have an account?</div>
           <button
             type="button"
-            className="text-secondary font-bold hover:text-purple-700"
+            className="text-secondary font-bold hover:text-hover_secondary"
             onClick={handleLogin}
           >
             Login

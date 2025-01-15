@@ -7,6 +7,7 @@ import {
 
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import Welcome from "./pages/Welcome.jsx";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/" element={<Navigate to="/login" replace />}></Route>
+        <Route path="/" element={<Welcome />}></Route>
       </Routes>
     </Router>
   );
