@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    navigate("/signup");
+  };
   return (
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
@@ -41,7 +48,7 @@ const Login = () => {
                 />
               </label>
             </div>
-            <div>
+            <div className="flex justify-end">
               <button
                 className="text-secondary underline hover:cursor-pointer hover:text-purple-700"
                 type="button"
@@ -89,6 +96,7 @@ const Login = () => {
           <button
             type="button"
             className="text-secondary font-bold hover:text-purple-700"
+            onClick={handleSignUp}
           >
             Sign Up
           </button>
