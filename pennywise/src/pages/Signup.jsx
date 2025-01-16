@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, PersonStanding, User } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -21,54 +21,50 @@ const Signup = () => {
         <form className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
             <div>
-              <div className="flex flex-row space-x-3 my-4">
-                <div>
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm font-medium text-text"
-                  >
-                    First Name
-                  </label>
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-text"
+                >
+                  Username
+                </label>
+                <div className="relative">
                   <input
                     type="text"
-                    name="first"
-                    id="first"
+                    name="username"
+                    id="username"
                     required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                    placeholder="Enter your First Name"
+                    className="mt-1 mb-4 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    placeholder="Enter your Full Name"
                   />
-                </div>
-                <div>
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm font-medium text-text"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    name="last"
-                    id="last"
-                    required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                    placeholder="Enter your Last Name"
+                  <User
+                    className="absolute inset-y-0 pt-2 pl-3 h-8 w-8 pointer-events-none left-0 text-gray-400"
+                    strokeWidth={1.5}
                   />
                 </div>
               </div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-text"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                placeholder="Enter your Email Address"
-              />
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-text"
+                >
+                  Email Address
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    placeholder="Enter your Email Address"
+                  />
+                  <Mail
+                    className="absolute inset-y-0 pt-2 pl-3 h-8 w-8 pointer-events-none left-0 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
             </div>
             <div>
               <label
@@ -77,21 +73,29 @@ const Signup = () => {
               >
                 Password
               </label>
-              <div className="flex relative">
+              <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                   placeholder="Enter your Password"
+                />
+                <Lock
+                  className="absolute inset-y-0 left-0 flex items-center pt-2 pl-3 h-8 w-8 text-gray-400 pointer-events-none"
+                  strokeWidth={1.5}
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <Eye /> : <EyeOff />}
+                  {showPassword ? (
+                    <Eye strokeWidth={1.5} />
+                  ) : (
+                    <EyeOff strokeWidth={1.5} />
+                  )}
                 </button>
               </div>
             </div>
@@ -102,21 +106,29 @@ const Signup = () => {
               >
                 Confirm Password
               </label>
-              <div className="flex relative">
+              <div className="relative">
                 <input
-                  type="password"
+                  type={showCPassword ? "text" : "password"}
                   name="cpassword"
                   id="cpassword"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                   placeholder="Confirm Password"
+                />
+                <Lock
+                  className="absolute inset-y-0 left-0 flex items-center pt-2 pl-3 h-8 w-8 text-gray-400 pointer-events-none"
+                  strokeWidth={1.5}
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowCPassword(!showCPassword)}
                 >
-                  {showCPassword ? <Eye /> : <EyeOff />}
+                  {showCPassword ? (
+                    <Eye strokeWidth={1.5} />
+                  ) : (
+                    <EyeOff strokeWidth={1.5} />
+                  )}
                 </button>
               </div>
             </div>

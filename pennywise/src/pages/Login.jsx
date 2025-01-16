@@ -26,14 +26,23 @@ const Login = () => {
               >
                 Email Address
               </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                placeholder="Enter your Email Address"
-              />
+              <div className="relative">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary
+                  focus:ring-primary
+                  focus:ring-1
+                  "
+                  placeholder="Enter your Email Address"
+                />
+                <Mail
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  strokeWidth={1.5}
+                />
+              </div>
             </div>
             <div>
               <label
@@ -43,22 +52,29 @@ const Login = () => {
                 Password
               </label>
 
-              <div className="flex relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2" />
+              <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                   placeholder="Enter your Password"
+                />
+                <Lock
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
+                  strokeWidth={1.5}
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <Eye /> : <EyeOff />}
+                  {showPassword ? (
+                    <Eye strokeWidth={1.5} />
+                  ) : (
+                    <EyeOff strokeWidth={1.5} />
+                  )}
                 </button>
               </div>
             </div>

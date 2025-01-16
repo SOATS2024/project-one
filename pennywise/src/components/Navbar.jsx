@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="font-pennywise text-2xl">PennyWise</div>
       <button
         type="button"
-        className="bg-secondary px-4 py-1.5 rounded-md text-white text-base font-medium hover:bg-hover_secondary"
+        className="bg-white px-4 py-1.5 rounded-md text-primary border-2 border-primary text-base font-medium hover:bg-background"
         onClick={handleLogin}
       >
         Login
