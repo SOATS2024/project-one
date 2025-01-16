@@ -18,7 +18,40 @@ export default {
         text: "#1f2937",
       },
       fontFamily: {
-        'pennywise': ['DistilleryScript']
+        'pennywise': ['DM Sans', 'sans-serif'],
+        'header': ['Outfit', 'sans-serif'],
+        'content': ['Nunito', 'sans-serif']
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': {opacity: '0'},
+          '100%' : {opacity: '1'},
+        },
+        slideUp: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        fadeSlideUp: {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 1s ease-in',
+        slideUp: 'slideUp 1.5s ease-out',
+        fadeSlideUp: 'fadeSlideUp 1.5s ease-out 2s forwards'
       }
     },
   },

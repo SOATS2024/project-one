@@ -14,7 +14,7 @@ const Signup = () => {
     <div className="flex justify-center items-center bg-background min-h-screen overflow-y-hidden">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div>
-          <h2 className=" text-center text-3xl font-bold text-text">
+          <h2 className=" text-center text-3xl font-bold text-text font-header">
             Sign Up for <span className="font-pennywise">PennyWise</span>
           </h2>
         </div>
@@ -24,7 +24,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-text"
+                  className="block text-sm font-medium text-text font-header"
                 >
                   Username
                 </label>
@@ -34,7 +34,7 @@ const Signup = () => {
                     name="username"
                     id="username"
                     required
-                    className="mt-1 mb-4 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    className="mt-1 mb-4 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                     placeholder="Enter your Full Name"
                   />
                   <User
@@ -46,7 +46,7 @@ const Signup = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-text"
+                  className="block text-sm font-medium text-text font-header"
                 >
                   Email Address
                 </label>
@@ -56,7 +56,7 @@ const Signup = () => {
                     name="email"
                     id="email"
                     required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                     placeholder="Enter your Email Address"
                   />
                   <Mail
@@ -69,7 +69,7 @@ const Signup = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-text"
+                className="block text-sm font-medium text-text font-header"
               >
                 Password
               </label>
@@ -79,7 +79,7 @@ const Signup = () => {
                   name="password"
                   id="password"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                   placeholder="Enter your Password"
                 />
                 <Lock
@@ -102,7 +102,7 @@ const Signup = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-text"
+                className="block text-sm font-medium text-text font-header"
               >
                 Confirm Password
               </label>
@@ -112,7 +112,7 @@ const Signup = () => {
                   name="cpassword"
                   id="cpassword"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                   placeholder="Confirm Password"
                 />
                 <Lock
@@ -134,7 +134,7 @@ const Signup = () => {
             </div>
 
             <div className="flex pt-4">
-              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary">
+              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header">
                 Sign Up
               </button>
             </div>
@@ -142,11 +142,11 @@ const Signup = () => {
         </form>
         <div className="flex flex-row justify-center items-center px-3">
           <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
-          <span className="mx-3">Or</span>
+          <span className="mx-3 font-header">Or</span>
           <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
         </div>
         <div className="m-3">
-          <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ">
+          <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 font-header">
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

@@ -13,7 +13,7 @@ const Login = () => {
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div className="mb-4">
-          <h2 className=" text-center text-3xl font-bold text-text">
+          <h2 className=" text-center text-3xl font-bold text-text font-header">
             Welcome to <span className="font-pennywise">PennyWise</span>
           </h2>
         </div>
@@ -22,7 +22,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-text"
+                className="block text-sm font-medium text-text font-header"
               >
                 Email Address
               </label>
@@ -34,7 +34,7 @@ const Login = () => {
                   required
                   className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary
                   focus:ring-primary
-                  focus:ring-1
+                  focus:ring-1 font-content
                   "
                   placeholder="Enter your Email Address"
                 />
@@ -47,7 +47,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-text"
+                className="block text-sm font-medium text-text font-header"
               >
                 Password
               </label>
@@ -58,7 +58,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                   placeholder="Enter your Password"
                 />
                 <Lock
@@ -80,14 +80,14 @@ const Login = () => {
             </div>
             <div className="flex justify-end">
               <button
-                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary"
+                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary font-header"
                 type="button"
               >
                 Forgot Password?
               </button>
             </div>
             <div className="flex space-x-4">
-              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary">
+              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header">
                 Login
               </button>
             </div>
@@ -95,7 +95,7 @@ const Login = () => {
         </form>
         <div className="flex justify-center items-center px-3">
           <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
-          <span className="mx-2">Or</span>
+          <span className="mx-2 font-header">Or</span>
           <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
         </div>
         <div className="m-3">
@@ -118,10 +118,10 @@ const Login = () => {
                 fill="#EA4335"
               />
             </svg>
-            Sign in with Google
+            <span className="font-content">Sign in with Google</span>
           </button>
         </div>
-        <div className="flex mx-3 mt-3 space-x-1 justify-center">
+        <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
           <div className="font-semibold">Don't have an account?</div>
           <button
             type="button"
