@@ -1,21 +1,51 @@
+import { Plus } from "lucide-react";
+
 const ExpenseForm = () => {
   return (
-    <div className=" shadow ">
-      <div className="flex justify-around items-center">
-        <div className="w-full max-w-sm min-w-[200px]">
-          <div className="relative">
-            <input className="peer w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" />
-            <label className="absolute cursor-text bg-white px-1 left-2.5 top-2.5 text-slate-400 text-sm transition-all transform origin-left peer-focus:-top-2 peer-focus:left-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90">
-              Description Here...
-            </label>
-          </div>
+    <div className="flex flex-col bg-white shadow-lg m-5 p-7 gap-4 rounded-lg">
+      <div className="flex flex-row space-x-8 w-full ">
+        <div className="flex flex-col w-full gap-1">
+          <label
+            htmlFor="description"
+            className="block text-base font-medium text-text font-header uppercase"
+          >
+            Description
+          </label>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Enter Description"
+            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+          />
         </div>
-        <div>
-          <label htmlFor="amount">Amount</label>
-          <input type="number" />
+        <div className="flex flex-col w-full gap-1">
+          <label
+            htmlFor="description"
+            className="block text-base font-medium text-text font-header uppercase"
+          >
+            Amount
+          </label>
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            placeholder="Enter Amount"
+            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+          />
         </div>
       </div>
-      <button>Add Expense</button>
+      <div className="relative">
+        <span className="absolute inset-y-0 text-white pt-3 pl-7">
+          <Plus strokeWidth={1.5} />
+        </span>
+        <button
+          type="button"
+          className="inline-flex bg-secondary px-10 p-3 pl-14 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-lg"
+        >
+          Add Expense
+        </button>
+      </div>
     </div>
   );
 };

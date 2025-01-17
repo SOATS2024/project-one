@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff, Lock, Mail, PersonStanding, User } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -169,7 +169,9 @@ const Signup = () => {
           </button>
         </div>
         <div className="flex mx-3 mt-5 space-x-1 justify-center">
-          <div className="font-semibold">Already have an account?</div>
+          <div className="font-semibold font-header">
+            Already have an account?
+          </div>
           <button
             type="button"
             className="text-secondary font-bold hover:text-hover_secondary"

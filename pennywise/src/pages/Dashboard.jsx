@@ -1,4 +1,5 @@
 import ExpenseForm from "../components/ExpenseInput";
+import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   return (
@@ -9,7 +10,11 @@ const Dashboard = () => {
     //     <ExpenseForm />
     //   </div>
     // </div>
-    <ExpenseForm />
+
+    <div className="bg-background min-h-screen">
+      <Navbar isWelcome={false} />
+      <ExpenseForm />
+    </div>
   );
 };
 
