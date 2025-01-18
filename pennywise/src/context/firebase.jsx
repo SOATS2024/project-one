@@ -25,7 +25,6 @@ const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 
 export const FirebaseProvider = ({ children }) => {
-
   const signUpUserWithEmailAndPassword = (email, password) =>
     createUserWithEmailAndPassword(firebaseAuth, email, password);
 
@@ -38,8 +37,8 @@ export const FirebaseProvider = ({ children }) => {
     signInWithEmailAndPassword(firebaseAuth, email, password);
 
   const logOut = () => {
-    signOut(firebaseAuth)
-    }
+    signOut(firebaseAuth);
+  };
 
   return (
     <FirebaseContext.Provider
@@ -47,7 +46,7 @@ export const FirebaseProvider = ({ children }) => {
         signUpUserWithEmailAndPassword,
         signInWithEmail,
         withGoogle,
-        logOut
+        logOut,
       }}
     >
       {children}

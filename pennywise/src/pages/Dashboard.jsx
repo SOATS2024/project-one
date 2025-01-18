@@ -7,12 +7,12 @@ import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { logOut } = useFirebase();
+  const firebase = useFirebase();
   const [error, setError] = useState(null);
 
   const handleSubmit = async () => {
     try {
-      await logOut();
+      await firebase.logOut();
       navigate("/Login");
     } catch {
       setError("An error occurred while Signing Out");

@@ -6,13 +6,13 @@ import { useFirebase } from "../context/firebase";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const {signInWithEmail, withGoogle} = useFirebase();
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const firebase = useFirebase();
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -26,23 +26,23 @@ const Login = () => {
       return;
     }
 
-    try{
-      await signInWithEmail()
-      navigate("/dashboard")
-    } catch{
-      setError("Error logging in to your account")
+    try {
+      await firebase.signInWithEmail(email, password);
+      // console.log(email, password, firebase);
+      navigate("/dashboard");
+    } catch {
+      setError("Error logging in to your account");
     }
-  }
+  };
 
   const handleGoogle = async () => {
-    try{
-      await withGoogle()
-      navigate("/dashboard")
+    try {
+      await withGoogle();
+      navigate("/dashboard");
+    } catch {
+      setError("Error logging in with Google");
     }
-    catch {
-      setError("Error logging in with Google")
-  }
-}
+  };
 
   const handleSignUp = () => {
     navigate("/signup");
@@ -67,7 +67,7 @@ const Login = () => {
               <div className="relative">
                 <input
                   onChange={(e) => setEmail(e.target.value)}
-                  value = {email}
+                  value={email}
                   type="email"
                   name="email"
                   id="email"
@@ -94,7 +94,7 @@ const Login = () => {
               <div className="relative">
                 <input
                   onChange={(e) => setPassword(e.target.value)}
-                  value = {password}
+                  value={password}
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
@@ -128,7 +128,10 @@ const Login = () => {
               </button>
             </div>
             <div className="flex space-x-4">
-              <button onClick={handleSubmit} className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header">
+              <button
+                onClick={handleSubmit}
+                className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header"
+              >
                 Login
               </button>
             </div>
@@ -140,7 +143,10 @@ const Login = () => {
           <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
         </div>
         <div className="m-3">
-          <button onClick={handleGoogle} className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ">
+          <button
+            onClick={handleGoogle}
+            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 "
+          >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
