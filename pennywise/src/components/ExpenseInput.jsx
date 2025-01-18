@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 
 const ExpenseForm = () => {
   return (
-    <div className="flex flex-col bg-white shadow-lg m-5 p-7 gap-4 rounded-lg">
+    <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[300px]">
       <div className="flex flex-row space-x-8 w-full ">
         <div className="flex flex-col w-full gap-1">
           <label
