@@ -1,11 +1,55 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useFirebase } from "../context/firebase";
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [cpassword, setCPassword] = useState(null)
+  const {signUpUserWithEmailAndPassword, withGoogle} = useFirebase();
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault()
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format");
+      return;
+    }
+
+    if(password !== cpassword){
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (!email || !password || !cpassword) {
+      setError("All fields are required");
+      return;
+    }
+
+    try{
+      await signUpUserWithEmailAndPassword()
+      navigate("/dashboard")
+    } catch {
+      setError("An error occurred while creating your account")
+    }
+  }
+
+  const handleGoogle = async () => {
+    try{
+      await withGoogle()
+      navigate("/dashboard")
+    }
+    catch{
+      setError("Error logging in with Google")
+    }
+  }
 
   const handleLogin = () => {
     navigate("/login");
@@ -52,6 +96,8 @@ const Signup = () => {
                 </label>
                 <div className="relative">
                   <input
+                    onChange={(e) => setEmail(e.target.value)}
+                    value = {email}
                     type="email"
                     name="email"
                     id="email"
@@ -75,6 +121,8 @@ const Signup = () => {
               </label>
               <div className="relative">
                 <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  value = {password}
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
@@ -108,6 +156,8 @@ const Signup = () => {
               </label>
               <div className="relative">
                 <input
+                  onChange={(e) => setCPassword(e.target.value)}
+                  value= {cpassword}
                   type={showCPassword ? "text" : "password"}
                   name="cpassword"
                   id="cpassword"
@@ -134,7 +184,7 @@ const Signup = () => {
             </div>
 
             <div className="flex pt-4">
-              <button className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header">
+              <button onClick={handleSubmit} className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header">
                 Sign Up
               </button>
             </div>
@@ -146,7 +196,7 @@ const Signup = () => {
           <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
         </div>
         <div className="m-3">
-          <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 font-header">
+          <button onClick={handleGoogle} className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 font-header">
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -165,7 +215,7 @@ const Signup = () => {
                 fill="#EA4335"
               />
             </svg>
-            Sign in with Google
+            Continue with Google
           </button>
         </div>
         <div className="flex mx-3 mt-5 space-x-1 justify-center">
