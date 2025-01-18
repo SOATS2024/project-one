@@ -36,7 +36,7 @@ const ExpenseForm = () => {
         </div>
       </div>
       <div className="relative">
-        <span className="absolute inset-y-0 text-white pt-3 pl-7">
+        <span className="absolute inset-y-0 text-white pt-3 pl-7 pointer-events-none">
           <Plus strokeWidth={1.5} />
         </span>
         <button
