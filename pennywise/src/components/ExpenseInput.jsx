@@ -16,7 +16,7 @@ const ExpenseForm = () => {
             name="description"
             id="description"
             placeholder="Enter Description"
-            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content w-full"
           />
         </div>
         <div className="flex flex-col w-full gap-1">
@@ -31,7 +31,7 @@ const ExpenseForm = () => {
             name="amount"
             id="amount"
             placeholder="Enter Amount"
-            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+            className="block border border-gray-300 rounded-md text-lg mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content w-full"
           />
         </div>
       </div>
