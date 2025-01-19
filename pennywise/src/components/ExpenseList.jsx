@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useFirebase } from "../context/firebase"; // Ensure correct import
 import { Edit, Trash, RefreshCw } from "lucide-react";
-import ExpenseForm from "./ExpenseInput";
+import ExpenseForm from "./ExpenseForm";
 
 const ExpenseList = () => {
   const { currentUser, fetchExpenses } = useFirebase();

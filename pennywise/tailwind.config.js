@@ -7,20 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        // primary: "#3d8351",
-        // secondary: "#059669", 
-        // background: "#ecfdf5",
-        // hover_secondary: "#036345",
+        primary: "#3d8351",
+        secondary: "#059669", 
+        background: "#ecfdf5",
+        hover_secondary: "#036345",
         //////////////////////////////////
         // primary: "#9c013a",
         // secondary: "#cb014b",
         // background: "#ffe6ef",
         // hover_secondary: "#980138",
         //////////////////////////////////
-        primary: "#1D1616",
-        secondary: "#8E1616", 
-        background: "#EEEEEE",
-        hover_secondary: "#6e1111",
+        // primary: "#1D1616",
+        // secondary: "#8E1616", 
+        // background: "#EEEEEE",
+        // hover_secondary: "#6e1111",
         text: "#000000",
       },
       fontFamily: {

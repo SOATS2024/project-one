@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useFirebase } from "../context/firebase";
-import ExpenseForm from "../components/ExpenseInput";
+import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import Navbar from "../components/Navbar";
 import Sidebar, { SidebarItem } from "../components/Sidebar";
