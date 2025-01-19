@@ -2,7 +2,7 @@ import { Edit, Trash } from "lucide-react";
 
 const ExpenseList = () => {
   return (
-    <div className="m-5 mt-0">
+    <div className="m-5 mt-0 w-full">
       <div className="relative flex flex-col w-full h-full text-gray-700 font-content bg-white shadow-md rounded-lg ">
         <table className="w-full text-left  min-w-max">
           <thead className="font-header text-lg bg-secondary border-b border-gray-300">

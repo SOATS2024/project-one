@@ -1,64 +1,71 @@
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef } from "react";
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+  const buttonRef = useRef(null);
+
+  const applyToggle = () => {
+    buttonRef.current.classList.toggle("absolute");
+    buttonRef.current.classList.toggle("top-3");
+    buttonRef.current.classList.toggle("right-0");
+  };
+
   return (
-    <>
-      <aside className="h-screen">
-        <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-          <div className="p-4 pb-2 flex items-center justify-center">
-            <img
-              src={
-                "https://images.unsplash.com/photo-1728486144466-2a9f151dfbaf?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              className={`overflow-hidden transition-all rounded-full ${
-                expanded ? "h-32 w-32" : "w-0"
-              }`}
-            />
-            <button
-              onClick={() => setExpanded((curr) => !curr)}
-              className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100  ml-[auto]"
-            >
-              {expanded ? <ChevronFirst /> : <ChevronLast />}
-            </button>
-          </div>
+    <aside className="h-screen">
+      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+        <div className="p-4 pb-2 flex items-center justify-center relative pt-2">
+          <img
+            src="https://images.unsplash.com/photo-1728486144466-2a9f151dfbaf?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className={`overflow-hidden transition-all rounded-full ${
+              expanded ? "h-32 w-32" : "w-0"
+            }`}
+          />
+          <button
+            ref={buttonRef}
+            onClick={() => {
+              setExpanded((curr) => !curr);
+              applyToggle();
+            }}
+            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 absolute right-4 top-1/2 transform -translate-y-1/2"
+          >
+            {expanded ? <ChevronFirst /> : <ChevronLast />}
+          </button>
+        </div>
 
-          <SidebarContext.Provider value={{ expanded }}>
-            <ul className="flex-1 px-3">{children}</ul>
-          </SidebarContext.Provider>
+        <SidebarContext.Provider value={{ expanded }}>
+          <ul className="flex-1 px-3">{children}</ul>
+        </SidebarContext.Provider>
 
-          <div className="border-t flex p-3">
-            <img
-              src={
-                "https://images.unsplash.com/photo-1473773386757-42bbe7288351?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fHww"
-              }
-              className="w-10 h-10 rounded-md"
-            />
-            <div
-              className={`flex justify-between items-center overflow-hidden transition-all ${
-                expanded ? "w-52 ml-3" : "w-0"
-              } `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">constGenius</h4>
-                <span className="text-xs text-gray-600">
-                  constgenius@gmail.com
-                </span>
-              </div>
-              <MoreVertical size={20} />
+        <div className="border-t flex p-3">
+          <img
+            src="https://images.unsplash.com/photo-1473773386757-42bbe7288351?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fHww"
+            className="w-10 h-10 rounded-md"
+          />
+          <div
+            className={`flex justify-between items-center overflow-hidden transition-all ${
+              expanded ? "w-52 ml-3" : "w-0"
+            }`}
+          >
+            <div className="leading-4">
+              <h4 className="font-semibold">constGenius</h4>
+              <span className="text-xs text-gray-600">
+                constgenius@gmail.com
+              </span>
             </div>
+            <MoreVertical size={20} />
           </div>
-        </nav>
-      </aside>
-    </>
+        </div>
+      </nav>
+    </aside>
   );
 }
 
 export function SidebarItem({ icon, text, active, alert }) {
   const { expanded } = useContext(SidebarContext);
+
   return (
     <li
       className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${

@@ -8,6 +8,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [cpassword, setCPassword] = useState(null);
   const firebase = useFirebase();
@@ -34,7 +35,7 @@ const Signup = () => {
     }
 
     try {
-      await firebase.signUpUserWithEmailAndPassword(email, password);
+      await firebase.signUpUserWithEmailAndPassword(username, email, password);
       navigate("/dashboard");
     } catch {
       setError("An error occurred while creating your account");
@@ -74,6 +75,8 @@ const Signup = () => {
                 <div className="relative">
                   <input
                     type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     name="username"
                     id="username"
                     required
