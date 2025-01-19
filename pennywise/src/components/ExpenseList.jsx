@@ -34,7 +34,48 @@ const ExpenseList = () => {
   }
 
   if (expenses.length === 0) {
-    return <div>No expenses found.</div>; // Handle empty state
+    return (
+      <div className="m-5 mt-0 w-full flex items-start justify-center gap-5">
+        <ExpenseForm addExpenseToList={addExpenseToList} />
+        <div>No expenses found.</div>
+        <table className="w-full text-left min-w-max">
+          <thead className="font-header text-lg bg-secondary border-b border-gray-300">
+            <tr className="text-white">
+              <th className="p-4">No.</th>
+              <th className="p-4">Description</th>
+              <th className="p-4">Amount</th>
+              <th className="p-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses
+              .slice()
+              .reverse()
+              .map((expense, index) => (
+                <tr key={expense.id} className="border-b border-gray-200">
+                  <td className="p-4">{index + 1}</td>
+                  <td className="p-4">{expense.description}</td>
+                  <td className="p-4">${expense.amount.toFixed(2)}</td>
+                  <td className="p-4 space-x-3">
+                    <button
+                      type="button"
+                      className="text-secondary hover:text-hover_secondary"
+                    >
+                      <Edit strokeWidth={1.5} />
+                    </button>
+                    <button
+                      type="button"
+                      className="text-secondary hover:text-hover_secondary"
+                    >
+                      <Trash strokeWidth={1.5} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    ); // Handle empty state
   }
 
   return (
