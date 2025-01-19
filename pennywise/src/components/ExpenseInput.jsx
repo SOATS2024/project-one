@@ -13,7 +13,7 @@ const ExpenseForm = () => {
     setAmount(0);
   };
   return (
-    <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[300px]">
+    <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[220px]">
       <div className="flex flex-row space-x-8 w-full ">
         <div className="flex flex-col w-full gap-1">
           <label
@@ -50,17 +50,15 @@ const ExpenseForm = () => {
           />
         </div>
       </div>
-      <div className="relative">
-        <span className="absolute inset-y-0 text-white pt-3 pl-7 pointer-events-none">
-          <Plus strokeWidth={1.5} />
-        </span>
+      <div className="">
         <button
           type="button"
           onClick={(e) => {
             handleAddExpense(e);
           }}
-          className="inline-flex bg-secondary px-10 p-3 pl-14 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-lg"
+          className=" bg-secondary px-10 p-3 pl-14 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-lg w-full flex items-center justify-center gap-2"
         >
+          <Plus strokeWidth={1.5} />
           Add Expense
         </button>
       </div>

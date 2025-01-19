@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
 import { useFirebase } from "../context/firebase"; // Ensure correct import
-import { Edit, Trash } from "lucide-react";
+import { Edit, Trash, RefreshCw } from "lucide-react";
 
 const ExpenseList = () => {
   const { currentUser, fetchExpenses } = useFirebase();
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const loadExpenses = async () => {
+    if (!currentUser) return; // Wait until user is logged in
+
+    try {
+      const data = await fetchExpenses(currentUser.uid); // Pass user ID
+      setExpenses(data || []);
+    } catch (error) {
+      console.error("Failed to load expenses:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadExpenses = async () => {
-      if (!currentUser) return; // Wait until user is logged in
-
-      try {
-        const data = await fetchExpenses(currentUser.uid); // Pass user ID
-        setExpenses(data || []);
-      } catch (error) {
-        console.error("Failed to load expenses:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadExpenses();
   }, [currentUser, fetchExpenses]); // Dependency array includes currentUser
 
@@ -66,6 +66,12 @@ const ExpenseList = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center  p-4 gap-3 text-secondary hover:text-hover_secondary">
+          <RefreshCw strokeWidth={1.5} />
+          <button type="button" className="" onClick={loadExpenses}>
+            Reload
+          </button>
+        </div>
       </div>
     </div>
   );

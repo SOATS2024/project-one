@@ -107,12 +107,18 @@ export const FirebaseProvider = ({ children }) => {
     const timestamp = new Date(); // Current timestamp
 
     try {
-      await addDoc(dailyExpensesCollection, {
+      const docRef = await addDoc(dailyExpensesCollection, {
         description,
         amount: parseFloat(amount),
         date: timestamp,
       });
       console.log("Expense Added Successfully");
+      return {
+        id: docRef.id,
+        description,
+        amount: parseFloat(amount),
+        date: timestamp,
+      }; // Return the new expense
     } catch (e) {
       console.error("Error adding Expense", e);
     }

@@ -42,7 +42,7 @@ const Dashboard = () => {
       {/* <div>Dashboard</div>
       <h1>Click the button below:</h1>
       <button onClick={handleSubmit}>Sign Out</button> */}
-      <div className="flex">
+      <div className="flex mt-2">
         <Sidebar>
           <SidebarItem icon={<Home size={20} />} text="Home" alert />
           <SidebarItem
