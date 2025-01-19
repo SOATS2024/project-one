@@ -15,9 +15,12 @@ import {
   setDoc,
   collection,
   addDoc,
+  getDocs,
+  query,
+  orderBy,
 } from "firebase/firestore";
 
-// Firebase configuration (replace with your config)
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD87WXfVYRUirN0p7q9d2daWMT07ntNaIQ",
   authDomain: "pennywise-9f005.firebaseapp.com",
@@ -41,23 +44,53 @@ export const FirebaseProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
+        console.log("User logged in:", user);
         setCurrentUser(user);
       } else {
+        console.log("No user logged in.");
         setCurrentUser(null);
       }
     });
 
-    // Clean up the listener on unmount
     return () => unsubscribe();
   }, []);
 
   const getDateInYearMonthFormat = () => {
-    const date = new Date();
-    return `${date.getFullYear()}-${date.getMonth() + 1}`;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Ensure 2 digits
+    return `${year}-${month}`;
+  };
+
+  // Fetch expenses
+  const fetchExpenses = async (userId) => {
+    try {
+      const dailyExpensesCollection = collection(
+        firestore,
+        "users",
+        userId,
+        "expenses",
+        getDateInYearMonthFormat(),
+        "dailyExpenses"
+      );
+
+      const q = query(dailyExpensesCollection, orderBy("date", "asc"));
+      const querySnapshot = await getDocs(q);
+
+      const expenses = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      return expenses;
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+      return [];
+    }
   };
 
   // Function to add expense to the Firestore structure
-  const addExpense = async (description, amount, note) => {
+  const addExpense = async (description, amount) => {
     if (!currentUser) return; // Ensure currentUser is not null
 
     const currentUserRef = doc(firestore, "users", currentUser.uid);
@@ -76,9 +109,8 @@ export const FirebaseProvider = ({ children }) => {
     try {
       await addDoc(dailyExpensesCollection, {
         description,
-        amount,
+        amount: parseFloat(amount),
         date: timestamp,
-        // timestamp, // Store the timestamp for reference
       });
       console.log("Expense Added Successfully");
     } catch (e) {
@@ -92,7 +124,7 @@ export const FirebaseProvider = ({ children }) => {
     await setDoc(userRef, {
       uid: user.uid,
       email: user.email,
-      username: user.username || "",
+      displayName: user.displayName || "",
       createdAt: new Date(),
     });
   };
@@ -105,8 +137,7 @@ export const FirebaseProvider = ({ children }) => {
         password
       );
       const user = userCredential.user;
-      user.username = fullName;
-      user.totalSpent = 0;
+      user.displayName = fullName;
       setCurrentUser(user); // Update current user state
       await saveUserToFirestore(user);
       console.log("User Registration Successful");
@@ -157,6 +188,7 @@ export const FirebaseProvider = ({ children }) => {
         withGoogle,
         logOut,
         addExpense, // Expose addExpense function
+        fetchExpenses,
       }}
     >
       {children}
