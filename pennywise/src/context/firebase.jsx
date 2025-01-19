@@ -26,6 +26,7 @@ const firebaseConfig = {
   messagingSenderId: "478808999063",
   appId: "1:478808999063:web:35d1469217532149e2d5d2",
 };
+
 const FirebaseContext = createContext(null);
 
 // Initialize Firebase App if not already initialized
@@ -50,30 +51,40 @@ export const FirebaseProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // const currentUserRef = doc(firestore, "users", currentUser.uid);
-  // const monthlyExpenseRef = doc(
-  //   collection(currentUserRef, "expenses"),
-  //   getDateInYearMonthFormat
-  // );
+  const getDateInYearMonthFormat = () => {
+    const date = new Date();
+    return `${date.getFullYear()}-${date.getMonth() + 1}`;
+  };
 
-  // const getDateInYearMonthFormat = () => {
-  //   const date = new Date();
-  //   return `${date.getFullYear()}-${date.getMonth() + 1}`;
-  // };
+  // Function to add expense to the Firestore structure
+  const addExpense = async (description, amount, note) => {
+    if (!currentUser) return; // Ensure currentUser is not null
 
-  // const dailyExpensesRef = async () => {
-  //   const dailyExpensesCollection = collection(
-  //     monthlyExpenseRef,
-  //     "dailyExpenses"
-  //   );
-  //   await addDoc(dailyExpensesCollection, {
-  //     title: "Groceries",
-  //     amount: 50,
-  //     category: "Food",
-  //     date: new Date(), // Use current date
-  //     note: "Weekly grocery shopping",
-  //   });
-  // };
+    const currentUserRef = doc(firestore, "users", currentUser.uid);
+    const monthlyExpenseRef = doc(
+      collection(currentUserRef, "expenses"),
+      getDateInYearMonthFormat() // Use Year-Month format for collection name
+    );
+
+    const dailyExpensesCollection = collection(
+      monthlyExpenseRef,
+      "dailyExpenses"
+    );
+
+    const timestamp = new Date(); // Current timestamp
+
+    try {
+      await addDoc(dailyExpensesCollection, {
+        description,
+        amount,
+        date: timestamp,
+        // timestamp, // Store the timestamp for reference
+      });
+      console.log("Expense Added Successfully");
+    } catch (e) {
+      console.error("Error adding Expense", e);
+    }
+  };
 
   const saveUserToFirestore = async (user) => {
     if (!user) return;
@@ -145,7 +156,7 @@ export const FirebaseProvider = ({ children }) => {
         signInWithEmail,
         withGoogle,
         logOut,
-        dailyExpensesRef,
+        addExpense, // Expose addExpense function
       }}
     >
       {children}

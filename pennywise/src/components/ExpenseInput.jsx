@@ -6,6 +6,12 @@ const ExpenseForm = () => {
   const firestore = useFirebase();
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState(0);
+  const handleAddExpense = (e) => {
+    e.preventDefault();
+    firestore.addExpense(expense, amount);
+    setExpense("");
+    setAmount(0);
+  };
   return (
     <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[300px]">
       <div className="flex flex-row space-x-8 w-full ">
@@ -50,7 +56,9 @@ const ExpenseForm = () => {
         </span>
         <button
           type="button"
-          onClick={firestore.dailyExpensesRef}
+          onClick={(e) => {
+            handleAddExpense(e);
+          }}
           className="inline-flex bg-secondary px-10 p-3 pl-14 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-lg"
         >
           Add Expense
