@@ -58,7 +58,7 @@ const Dashboard = () => {
           <SidebarItem icon={<Settings size={20} />} text="Settings" />
           <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
         </Sidebar>
-        <ExpenseForm />
+        {/* <ExpenseForm /> */}
         <ExpenseList />
         {/* <div className="bg-background min-h-screen"></div> */}
       </div>

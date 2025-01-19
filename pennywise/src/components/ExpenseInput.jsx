@@ -2,13 +2,14 @@ import { Plus } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import { useState } from "react";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ addExpenseToList }) => {
   const firestore = useFirebase();
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState(0);
-  const handleAddExpense = (e) => {
+  const handleAddExpense = async (e) => {
     e.preventDefault();
-    firestore.addExpense(expense, amount);
+    const newExpense = await firestore.addExpense(expense, amount);
+    addExpenseToList(newExpense);
     setExpense("");
     setAmount(0);
   };

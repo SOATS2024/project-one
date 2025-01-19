@@ -93,31 +93,27 @@ export const FirebaseProvider = ({ children }) => {
   const addExpense = async (description, amount) => {
     if (!currentUser) return; // Ensure currentUser is not null
 
-    const currentUserRef = doc(firestore, "users", currentUser.uid);
-    const monthlyExpenseRef = doc(
-      collection(currentUserRef, "expenses"),
-      getDateInYearMonthFormat() // Use Year-Month format for collection name
-    );
-
     const dailyExpensesCollection = collection(
-      monthlyExpenseRef,
+      firestore,
+      "users",
+      currentUser.uid,
+      "expenses",
+      getDateInYearMonthFormat(),
       "dailyExpenses"
     );
-
-    const timestamp = new Date(); // Current timestamp
 
     try {
       const docRef = await addDoc(dailyExpensesCollection, {
         description,
         amount: parseFloat(amount),
-        date: timestamp,
+        date: new Date(),
       });
       console.log("Expense Added Successfully");
       return {
         id: docRef.id,
         description,
         amount: parseFloat(amount),
-        date: timestamp,
+        date: new Date(),
       }; // Return the new expense
     } catch (e) {
       console.error("Error adding Expense", e);
