@@ -1,9 +1,6 @@
 import Navbar from "../components/Navbar";
-
-import CT from "../components/CT";
-
+import ContentTile from "../components/ContentTile";
 import { ArrowRightIcon, PiggyBank } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
@@ -43,20 +40,20 @@ const Welcome = () => {
         </div>
         <div className="">{/* This div will hold the animation */}</div>
       </div>
-      <div className="flex bg-white h-full mt-3 shadow-md">
+      <div className="flex bg-white h-full mt-3 shadow-md w-full">
         <div className="flex flex-col">
           <div className="flex flex-row justify-between mx-4 p-7">
-            <CT
+            <ContentTile
               icon={PiggyBank}
               title="Smart Budgeting!"
               description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"
             />
-            <CT
+            <ContentTile
               icon={PiggyBank}
               title="Smart Budgeting!"
               description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"
             />
-            <CT
+            <ContentTile
               icon={PiggyBank}
               title="Smart Budgeting!"
               description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"

@@ -1,6 +1,6 @@
-const CT = ({ icon: Icon, title, description }) => {
+const ContentTile = ({ icon: Icon, title, description }) => {
   return (
-    <div className="flex flex-row relative px-1 py-4">
+    <div className="flex flex-row relative px-1 py-4 w-full">
       {Icon && (
         <Icon
           className="text-primary h-20 w-20 mr-5 absolute inset-y-0 pl-2"
@@ -15,4 +15,4 @@ const CT = ({ icon: Icon, title, description }) => {
   );
 };
 
-export default CT;
+export default ContentTile;
