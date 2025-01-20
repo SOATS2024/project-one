@@ -102,6 +102,7 @@ const ExpenseList = () => {
                       stroke="currentColor"
                       className="w-6 h-6"
                     >
+<<<<<<< Updated upstream
                       <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -134,6 +135,13 @@ const ExpenseList = () => {
                       stroke-width="2"
                       stroke="currentColor"
                       className="w-6 h-6"
+=======
+                      <Edit strokeWidth={1.5} />
+                    </button>
+                    <button
+                      type="button"
+                      className="text-[#8E1616] hover:text-hover_secondary"
+>>>>>>> Stashed changes
                     >
                       <path
                         stroke-linecap="round"
