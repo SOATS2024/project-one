@@ -8,7 +8,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const {signInWithEmail, withGoogle} = useFirebase();
+  const firestore = useFirebase();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) =>{
@@ -27,7 +27,7 @@ const Login = () => {
     }
 
     try{
-      await signInWithEmail()
+      await firestore.signInWithEmail()
       navigate("/dashboard")
     } catch{
       setError("Error logging in to your account")
@@ -35,17 +35,9 @@ const Login = () => {
   }
 
   const handleGoogle = async () => {
-<<<<<<< Updated upstream
     try{
-      await withGoogle()
+      await firestore.withGoogle()
       navigate("/dashboard")
-=======
-    try {
-      await firebase.withGoogle();
-      navigate("/dashboard");
-    } catch {
-      setError("Error logging in with Google");
->>>>>>> Stashed changes
     }
     catch {
       setError("Error logging in with Google")
