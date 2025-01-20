@@ -4,7 +4,7 @@ import { Edit, Trash, RefreshCw } from "lucide-react";
 import ExpenseForm from "./ExpenseForm";
 
 const ExpenseList = () => {
-  const { currentUser, fetchExpenses } = useFirebase();
+  const { currentUser, fetchExpenses , deleteExpense } = useFirebase();
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +24,15 @@ const ExpenseList = () => {
   useEffect(() => {
     loadExpenses();
   }, [currentUser, fetchExpenses]); // Dependency array includes currentUser
+
+  const handleDeleteExpense = async (expenseId ) => {
+    if (!currentUser) return;
+  try{
+    await deleteExpense(currentUser.uid , expenseId);
+    loadExpenses();
+  }catch(error){
+    console.error("Failed to delete expense:" , error);
+  } }
 
   const addExpenseToList = (newExpense) => {
     setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
@@ -110,6 +119,7 @@ const ExpenseList = () => {
                     <button
                       type="button"
                       className="text-secondary hover:text-hover_secondary"
+                      onClick={() => handleDeleteExpense(expense.id)}
                     >
                       <Trash strokeWidth={1.5} />
                     </button>

@@ -18,6 +18,7 @@ import {
   getDocs,
   query,
   orderBy,
+  deleteDoc,
 } from "firebase/firestore";
 
 // Firebase configuration
@@ -58,8 +59,33 @@ export const FirebaseProvider = ({ children }) => {
   const getDateInYearMonthFormat = () => {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0"); // Ensure 2 digits
+    const month = String(now.getMonth() + 1).padStart(2, "0"); 
     return `${year}-${month}`;
+  };
+
+  //Delete Expense
+  const deleteExpense = async (userId , expenseId) => {
+    if (!currentUser) return; // Ensure currentUser is not null
+    const expenseDocRef = doc(
+      firestore,
+      "users",
+      userId,
+      "expenses",
+      getDateInYearMonthFormat(),
+      "dailyExpenses",
+      expenseId
+    );
+    
+    try {
+      await deleteDoc(expenseDocRef);
+      console.log("Document successfully deleted!", expenseId);
+      alert("Expense deleted successfully!");
+      return "Document successfully deleted!" + expenseId;
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      alert("Failed to delete expense. Please try again.");
+      return "Error deleting document: " + error;
+    }
   };
 
   // Fetch expenses
@@ -191,6 +217,8 @@ export const FirebaseProvider = ({ children }) => {
         logOut,
         addExpense, // Expose addExpense function
         fetchExpenses,
+        deleteExpense,
+
       }}
     >
       {children}
