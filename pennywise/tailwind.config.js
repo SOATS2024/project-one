@@ -58,6 +58,9 @@ export default {
         fadeIn: 'fadeIn 1s ease-in',
         slideUp: 'slideUp 1.5s ease-out',
         fadeSlideUp: 'fadeSlideUp 1.5s ease-out 2s forwards'
+      },
+      screens: {
+        'custom_md': '850px'
       }
     },
   },
