@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import Logo from "../components/Logo";
 
@@ -10,32 +10,33 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(0);
   const firebase = useFirebase();
   const [error, setError] = useState(null);
+  const MAX_ATTEMPTS = 3;
 
   useEffect(() => {
-    const checkAndSignOut = async () => {
-      try {
-        if (firebase.currentUser) {
-          await firebase.logOut();
-          console.log("Previous user signed out");
-        }
-      } catch (error) {
-        console.error("Error signing out:", error);
-        setError("Error preparing login - please try again");
+    if (firebase.currentUser) {
+      const remembered = localStorage.getItem("rememberedUser");
+      if (remembered) {
+        navigate("/dashboard");
       }
-    };
-
-    checkAndSignOut();
-  }, [firebase]);
+    }
+  }, [firebase.currentUser, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (loginAttempts >= MAX_ATTEMPTS) {
+      setError("Too many failed attempts. Please try again later.");
+      setLoading(false);
+      return;
+    }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
       setLoading(false);
@@ -51,13 +52,22 @@ const Login = () => {
     try {
       const user = await firebase.signInWithEmail(email, password);
       if (user) {
+        setLoginAttempts(0);
+        if (rememberMe) {
+          localStorage.setItem("rememberedUser", "true");
+        } else {
+          localStorage.removeItem("rememberedUser");
+        }
         navigate("/dashboard");
-      } else {
-        setError("Login failed - please try again");
       }
     } catch (error) {
+      setLoginAttempts((prev) => prev + 1);
       if (error.code === "auth/invalid-credential") {
-        setError("Invalid email or password");
+        setError(
+          `Invalid email or password - ${
+            MAX_ATTEMPTS - loginAttempts
+          } attempts remaining`
+        );
       } else {
         setError("Error logging in to your account");
         console.error(error);
@@ -72,9 +82,10 @@ const Login = () => {
       setLoading(true);
       const user = await firebase.withGoogle();
       if (user) {
+        if (rememberMe) {
+          localStorage.setItem("rememberedUser", "true");
+        }
         navigate("/dashboard");
-      } else {
-        setError("Google login failed - please try again");
       }
     } catch (error) {
       setError("Error logging in with Google");
@@ -122,8 +133,8 @@ const Login = () => {
                   name="email"
                   id="email"
                   required
-                  disabled={loading}
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content"
+                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
                   placeholder="Enter your Email Address"
                 />
                 <Mail
@@ -147,8 +158,8 @@ const Login = () => {
                   name="password"
                   id="password"
                   required
-                  disabled={loading}
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
                   placeholder="Enter your Password"
                 />
                 <Lock
@@ -157,7 +168,7 @@ const Login = () => {
                 />
                 <button
                   type="button"
-                  disabled={loading}
+                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -169,7 +180,23 @@ const Login = () => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  name="remember-me"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-text font-header"
+                >
+                  Remember me
+                </label>
+              </div>
               <button
                 type="button"
                 disabled={loading}
@@ -181,12 +208,23 @@ const Login = () => {
             <div className="flex space-x-4">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || loginAttempts >= MAX_ATTEMPTS}
                 className={`bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header ${
-                  loading ? "opacity-50 cursor-not-allowed" : ""
+                  loading || loginAttempts >= MAX_ATTEMPTS
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin inline mr-2" />
+                    Logging in...
+                  </>
+                ) : loginAttempts >= MAX_ATTEMPTS ? (
+                  "Too many attempts"
+                ) : (
+                  "Login"
+                )}
               </button>
             </div>
           </div>
@@ -199,9 +237,11 @@ const Login = () => {
         <div className="m-3">
           <button
             onClick={handleGoogle}
-            disabled={loading}
+            disabled={loading || loginAttempts >= MAX_ATTEMPTS}
             className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
+              loading || loginAttempts >= MAX_ATTEMPTS
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }`}
           >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">

@@ -2,27 +2,24 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import {
   getFirestore,
-  doc,
-  setDoc,
   collection,
   addDoc,
-  getDocs,
   query,
-  orderBy,
+  where,
+  getDocs,
   deleteDoc,
+  doc,
   updateDoc,
 } from "firebase/firestore";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
@@ -34,17 +31,15 @@ const firebaseConfig = {
 
 const FirebaseContext = createContext(null);
 
-// Initialize Firebase App if not already initialized
 const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const firebaseAuth = getAuth(firebaseApp);
+const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 export const FirebaseProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Listen to authentication state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("User logged in:", user);
         setCurrentUser(user);
@@ -58,203 +53,130 @@ export const FirebaseProvider = ({ children }) => {
   }, []);
 
   const getDateInYearMonthFormat = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    return `${year}-${month}`;
+    const date = new Date();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}`;
   };
 
-  //Delete Expense
   const deleteExpense = async (userId, expenseId) => {
-    if (!currentUser) return; // Ensure currentUser is not null
-    const expenseDocRef = doc(
-      firestore,
-      "users",
-      userId,
-      "expenses",
-      getDateInYearMonthFormat(),
-      "dailyExpenses",
-      expenseId
-    );
-
     try {
-      await deleteDoc(expenseDocRef);
-      console.log("Document successfully deleted!", expenseId);
-      alert("Expense deleted successfully!");
-      return "Document successfully deleted!" + expenseId;
+      const expenseRef = doc(firestore, "expenses", expenseId);
+      await deleteDoc(expenseRef);
+      return true;
     } catch (error) {
-      console.error("Error deleting document: ", error);
-      alert("Failed to delete expense. Please try again.");
-      return "Error deleting document: " + error;
+      console.error("Error deleting expense:", error);
+      throw error;
     }
   };
-
-  //update Expense
 
   const updateExpense = async (userId, expenseId, description, amount) => {
-    if (!currentUser) return;
-    const expenseDocRef = doc(
-      firestore,
-      "users",
-      userId,
-      "expenses",
-      getDateInYearMonthFormat(),
-      "dailyExpenses",
-      expenseId
-    );
     try {
-      await updateDoc(expenseDocRef, {
+      const expenseRef = doc(firestore, "expenses", expenseId);
+      await updateDoc(expenseRef, {
         description,
-        amount: parseFloat(amount),
+        amount: Number(amount),
+        updatedAt: new Date(),
       });
-      console.log("Document updated successfully!");
-      alert("Expense updated successfully!");
-      return "Document updated successfully!";
+      return true;
     } catch (error) {
-      console.error("Error updating document: ", error);
-      alert("Failed to update expense. Please try again.");
-      return "Error updating document: " + error;
+      console.error("Error updating expense:", error);
+      throw error;
     }
   };
 
-  // Fetch expenses
   const fetchExpenses = async (userId) => {
     try {
-      const dailyExpensesCollection = collection(
-        firestore,
-        "users",
-        userId,
-        "expenses",
-        getDateInYearMonthFormat(),
-        "dailyExpenses"
+      const currentYearMonth = getDateInYearMonthFormat();
+      const expensesRef = collection(firestore, "expenses");
+      const q = query(
+        expensesRef,
+        where("userId", "==", userId),
+        where("yearMonth", "==", currentYearMonth)
       );
-
-      const q = query(dailyExpensesCollection, orderBy("date", "asc"));
       const querySnapshot = await getDocs(q);
-
-      const expenses = querySnapshot.docs.map((doc) => ({
+      return querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-
-      return expenses;
     } catch (error) {
       console.error("Error fetching expenses:", error);
-      return [];
+      throw error;
     }
   };
 
-  // Function to add expense to the Firestore structure
   const addExpense = async (description, amount) => {
-    if (!currentUser) return; // Ensure currentUser is not null
-
-    const dailyExpensesCollection = collection(
-      firestore,
-      "users",
-      currentUser.uid,
-      "expenses",
-      getDateInYearMonthFormat(),
-      "dailyExpenses"
-    );
-
+    if (!currentUser) throw new Error("No authenticated user!");
     try {
-      const docRef = await addDoc(dailyExpensesCollection, {
+      const expenseData = {
         description,
-        amount: parseFloat(amount),
-        date: new Date(),
-      });
-      console.log("Expense Added Successfully");
-      return {
-        id: docRef.id,
-        description,
-        amount: parseFloat(amount),
-        date: new Date(),
-      }; // Return the new expense
-    } catch (e) {
-      console.error("Error adding Expense", e);
-    }
-  };
-
-  const saveUserToFirestore = async (user) => {
-    if (!user) return;
-    const userRef = doc(firestore, "users", user.uid);
-    await setDoc(userRef, {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName || "",
-      createdAt: new Date(),
-    });
-  };
-
-  const signUpUserWithEmailAndPassword = async (fullName, email, password) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password
+        amount: Number(amount),
+        userId: currentUser.uid,
+        yearMonth: getDateInYearMonthFormat(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      const docRef = await addDoc(
+        collection(firestore, "expenses"),
+        expenseData
       );
-      const user = userCredential.user;
-      user.displayName = fullName;
-      setCurrentUser(user); // Update current user state
-      await saveUserToFirestore(user);
-      console.log("User Registration Successful");
+      return { id: docRef.id, ...expenseData };
     } catch (error) {
-      console.error("Error during registration:", error);
+      console.error("Error adding expense:", error);
+      throw error;
     }
   };
 
   const signInWithEmail = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(
-        firebaseAuth,
+        auth,
         email,
         password
       );
-      setCurrentUser(userCredential.user); // Update current user state
       console.log("Current User", userCredential.user);
+      return userCredential.user;
     } catch (error) {
       console.error("Error during sign-in:", error);
+      throw error;
     }
   };
 
   const withGoogle = async () => {
     try {
-      const googleProvider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(
-        firebaseAuth,
-        googleProvider
-      );
-      setCurrentUser(userCredential.user); // Update current user state
-      await saveUserToFirestore(userCredential.user);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      return result.user;
     } catch (error) {
       console.error("Error during Google sign-in:", error);
+      throw error;
     }
   };
 
   const logOut = async () => {
     try {
-      await signOut(firebaseAuth);
-      setCurrentUser(null); // Update current user state on logout
+      await signOut(auth);
+      setCurrentUser(null);
     } catch (error) {
-      console.error("Error during sign-out:", error);
+      console.error("Error signing out:", error);
       throw error;
     }
   };
 
+  const value = {
+    currentUser,
+    signInWithEmail,
+    withGoogle,
+    logOut,
+    addExpense,
+    fetchExpenses,
+    deleteExpense,
+    updateExpense,
+  };
+
   return (
-    <FirebaseContext.Provider
-      value={{
-        currentUser,
-        signUpUserWithEmailAndPassword,
-        signInWithEmail,
-        withGoogle,
-        logOut,
-        addExpense, // Expose addExpense function
-        fetchExpenses,
-        deleteExpense,
-        updateExpense,
-      }}
-    >
+    <FirebaseContext.Provider value={value}>
       {children}
     </FirebaseContext.Provider>
   );
