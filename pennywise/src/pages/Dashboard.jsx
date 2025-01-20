@@ -23,14 +23,14 @@ export default function Dashboard() {
 
     return (
     <>
-    // <div className="grid grid-cols-3 gap-2 items-center">
-    //   <div>Hello world!</div>
-    //   <div>Hello world!</div>
-    //   <div>
-    //     <ExpenseForm />
-    //   </div>
-    // </div>
-      
+     {/* <div className="grid grid-cols-3 gap-2 items-center">
+       <div>Hello world!</div>
+       <div>Hello world!</div>
+       <div>
+         <ExpenseForm />
+       </div>
+    </div> */}
+
     <div>Dashboard</div>
     <h1>Click the button below:</h1>
     <button onClick={handleSubmit}>Sign Out</button>
@@ -42,5 +42,3 @@ export default function Dashboard() {
     </>
   )
 }
-
-export default Dashboard;
