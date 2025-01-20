@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useFirebase } from "../context/firebase";
+import Logo from "../components/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -65,10 +66,14 @@ const Login = () => {
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div className="mb-4">
           <h2 className=" text-center text-3xl font-bold text-text font-header">
-            Welcome to <span className="font-pennywise">PennyWise</span>
+            Welcome to <br />
+            <span className="flex items-center justify-center font-pennywise">
+              <Logo height={60} width={60} />
+              Penny<span className="text-secondary">Wise</span>{" "}
+            </span>
           </h2>
         </div>
-        <form className=" space-y-6">
+        <form className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
             <div>
               <label

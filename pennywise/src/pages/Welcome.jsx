@@ -14,13 +14,15 @@ const Welcome = () => {
       <Navbar isWelcome={true} />
       <div className="flex flex-row px-3 py-12">
         <div className="flex flex-col w-[45%] pl-6 animate-slideUp">
-          <div className="text-6xl font-extrabold font-header">
-            Take control of your
+          <div className="text-4xl sm:text-6xl">
+            <div className="font-extrabold font-header">
+              Take control of your
+            </div>
+            <div className="font-extrabold mt-1 text-secondary font-header">
+              financial future
+            </div>
           </div>
-          <div className="text-6xl font-extrabold mt-1 text-secondary font-header">
-            financial future
-          </div>
-          <div className="mt-3 text-gray-600 text-xl font-content">
+          <div className="mt-3 text-gray-600 text-base sm:text-xl font-content">
             PennyWise helps you track your daily expenses effortlessly, giving
             you clear insights into your spending habits. Spend smart, save
             better!
@@ -38,11 +40,13 @@ const Welcome = () => {
             </button>
           </div>
         </div>
-        <div className="">{/* This div will hold the animation */}</div>
+        <div className="md:hidden">
+          {/* This div will hold the animation */}
+        </div>
       </div>
       <div className="flex bg-white h-full mt-3 shadow-md w-full">
         <div className="flex flex-col">
-          <div className="flex flex-row justify-between mx-4 p-7">
+          <div className="flex flex-col custom_md:flex-row justify-between mx-4 p-7">
             <ContentTile
               icon={PiggyBank}
               title="Smart Budgeting!"
@@ -63,7 +67,7 @@ const Welcome = () => {
             <div className="border border-gray-200"></div>
           </div>
           <div className="mt-5 px-4 flex text-lg font-bold font-pennywise">
-            <span>PennyWise</span>
+            <span>About This Website</span>
           </div>
           <div className="mt-6 items-center">
             <div className="border border-gray-200"></div>
