@@ -7,42 +7,23 @@ const Logo = ({ width = 40, height = 40 }) => {
         width={width}
         height={height}
       >
-        {/* <!-- Logo Container --> */}
         <g>
-          {/* <!-- Stacked Coins --> */}
-          <ellipse
-            cx="20"
-            cy="26"
-            rx="16"
-            ry="4"
-            fill="#00A86B"
-            opacity="0.3"
-          />
-          <ellipse
-            cx="20"
-            cy="22"
-            rx="16"
-            ry="4"
-            fill="#00A86B"
-            opacity="0.5"
-          />
-
-          {/* <!-- Main Coin with Light Green Border --> */}
-          <ellipse cx="20" cy="18" rx="16" ry="4" fill="#00A86B" />
+          {/* Change stroke-width to strokeWidth */}
           <circle
             cx="20"
             cy="18"
             r="12"
             fill="#00A86B"
             stroke="#90EE90"
-            stroke-width="0.1"
+            strokeWidth="0.1"
           />
+          {/* Change font-size to fontSize, font-weight to fontWeight, text-anchor to textAnchor */}
           <text
             x="20"
             y="22"
-            font-size="12"
-            font-weight="bold"
-            text-anchor="middle"
+            fontSize="12"
+            fontWeight="bold"
+            textAnchor="middle"
             fill="white"
           >
             P

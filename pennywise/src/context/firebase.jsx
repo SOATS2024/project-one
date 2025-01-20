@@ -60,12 +60,12 @@ export const FirebaseProvider = ({ children }) => {
   const getDateInYearMonthFormat = () => {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0"); 
+    const month = String(now.getMonth() + 1).padStart(2, "0");
     return `${year}-${month}`;
   };
 
   //Delete Expense
-  const deleteExpense = async (userId , expenseId) => {
+  const deleteExpense = async (userId, expenseId) => {
     if (!currentUser) return; // Ensure currentUser is not null
     const expenseDocRef = doc(
       firestore,
@@ -74,9 +74,9 @@ export const FirebaseProvider = ({ children }) => {
       "expenses",
       getDateInYearMonthFormat(),
       "dailyExpenses",
-      expenseId,
+      expenseId
     );
-    
+
     try {
       await deleteDoc(expenseDocRef);
       console.log("Document successfully deleted!", expenseId);
@@ -88,11 +88,11 @@ export const FirebaseProvider = ({ children }) => {
       return "Error deleting document: " + error;
     }
   };
-  
+
   //update Expense
 
-  const updateExpense = async (userId , expenseId , description , amount) => {
-    if (!currentUser) return; 
+  const updateExpense = async (userId, expenseId, description, amount) => {
+    if (!currentUser) return;
     const expenseDocRef = doc(
       firestore,
       "users",
@@ -100,25 +100,22 @@ export const FirebaseProvider = ({ children }) => {
       "expenses",
       getDateInYearMonthFormat(),
       "dailyExpenses",
-      expenseId,
+      expenseId
     );
-    try{
-      await updateDoc(expenseDocRef , {
+    try {
+      await updateDoc(expenseDocRef, {
         description,
         amount: parseFloat(amount),
-        
       });
       console.log("Document updated successfully!");
       alert("Expense updated successfully!");
       return "Document updated successfully!";
-    }catch(error){
+    } catch (error) {
       console.error("Error updating document: ", error);
       alert("Failed to update expense. Please try again.");
       return "Error updating document: " + error;
     }
   };
-
-
 
   // Fetch expenses
   const fetchExpenses = async (userId) => {
@@ -234,9 +231,14 @@ export const FirebaseProvider = ({ children }) => {
     }
   };
 
-  const logOut = () => {
-    signOut(firebaseAuth);
-    setCurrentUser(null); // Update current user state on logout
+  const logOut = async () => {
+    try {
+      await signOut(firebaseAuth);
+      setCurrentUser(null); // Update current user state on logout
+    } catch (error) {
+      console.error("Error during sign-out:", error);
+      throw error;
+    }
   };
 
   return (
@@ -251,7 +253,6 @@ export const FirebaseProvider = ({ children }) => {
         fetchExpenses,
         deleteExpense,
         updateExpense,
-
       }}
     >
       {children}

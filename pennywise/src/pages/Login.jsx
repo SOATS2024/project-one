@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import Logo from "../components/Logo";
@@ -7,53 +7,80 @@ import Logo from "../components/Logo";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const firebase = useFirebase();
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const checkAndSignOut = async () => {
+      try {
+        if (firebase.currentUser) {
+          await firebase.logOut();
+          console.log("Previous user signed out");
+        }
+      } catch (error) {
+        console.error("Error signing out:", error);
+        setError("Error preparing login - please try again");
+      }
+    };
+
+    checkAndSignOut();
+  }, [firebase]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
+      setLoading(false);
       return;
     }
 
     if (!email || !password) {
       setError("All fields are required");
+      setLoading(false);
       return;
     }
 
     try {
-      await firebase.signInWithEmail(email, password);
-      // console.log(email, password, firebase);
-      navigate("/dashboard");
-    } catch {
-      setError("Error logging in to your account");
-      try {
-        await firestore.signInWithEmail();
+      const user = await firebase.signInWithEmail(email, password);
+      if (user) {
         navigate("/dashboard");
-      } catch {
+      } else {
+        setError("Login failed - please try again");
+      }
+    } catch (error) {
+      if (error.code === "auth/invalid-credential") {
+        setError("Invalid email or password");
+      } else {
         setError("Error logging in to your account");
+        console.error(error);
       }
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const handleGoogle = async () => {
-      try {
-        await firebase.withGoogle();
-        navigate("/dashboard");
-      } catch {
-        setError("Error logging in with Google");
-      }
-    };
+  const handleGoogle = async () => {
     try {
-      await firestore.withGoogle();
-      navigate("/dashboard");
-    } catch {
+      setLoading(true);
+      const user = await firebase.withGoogle();
+      if (user) {
+        navigate("/dashboard");
+      } else {
+        setError("Google login failed - please try again");
+      }
+    } catch (error) {
       setError("Error logging in with Google");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,8 +91,13 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
+            {error}
+          </div>
+        )}
         <div className="mb-4">
-          <h2 className=" text-center text-3xl font-bold text-text font-header">
+          <h2 className="text-center text-3xl font-bold text-text font-header">
             Welcome to <br />
             <span className="flex items-center justify-center font-pennywise">
               <Logo height={60} width={60} />
@@ -73,7 +105,7 @@ const Login = () => {
             </span>
           </h2>
         </div>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
             <div>
               <label
@@ -90,10 +122,8 @@ const Login = () => {
                   name="email"
                   id="email"
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary
-                  focus:ring-primary
-                  focus:ring-1 font-content
-                  "
+                  disabled={loading}
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content"
                   placeholder="Enter your Email Address"
                 />
                 <Mail
@@ -117,6 +147,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   required
+                  disabled={loading}
                   className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
                   placeholder="Enter your Password"
                 />
@@ -126,6 +157,7 @@ const Login = () => {
                 />
                 <button
                   type="button"
+                  disabled={loading}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -139,18 +171,22 @@ const Login = () => {
             </div>
             <div className="flex justify-end">
               <button
-                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary font-header"
                 type="button"
+                disabled={loading}
+                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary font-header"
               >
                 Forgot Password?
               </button>
             </div>
             <div className="flex space-x-4">
               <button
-                onClick={handleSubmit}
-                className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header"
+                type="submit"
+                disabled={loading}
+                className={`bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
             </div>
           </div>
@@ -163,7 +199,10 @@ const Login = () => {
         <div className="m-3">
           <button
             onClick={handleGoogle}
-            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 "
+            disabled={loading}
+            className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path
@@ -183,13 +222,16 @@ const Login = () => {
                 fill="#EA4335"
               />
             </svg>
-            <span className="font-content">Continue with Google</span>
+            <span className="font-content">
+              {loading ? "Connecting..." : "Continue with Google"}
+            </span>
           </button>
         </div>
         <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
           <div className="font-semibold">Don&apos;t have an account?</div>
           <button
             type="button"
+            disabled={loading}
             className="text-secondary font-bold hover:text-hover_secondary"
             onClick={routetoRegister}
           >

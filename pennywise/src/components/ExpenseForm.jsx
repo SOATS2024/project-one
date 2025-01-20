@@ -2,7 +2,12 @@ import { Plus, Edit3 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import { useState, useEffect } from "react";
 
-const ExpenseForm = ({ addExpenseToList, selectedExpense, clearSelectedExpense , loadExpenses }) => {
+const ExpenseForm = ({
+  addExpenseToList,
+  selectedExpense,
+  clearSelectedExpense,
+  loadExpenses,
+}) => {
   const firestore = useFirebase();
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState(0);
@@ -25,19 +30,31 @@ const ExpenseForm = ({ addExpenseToList, selectedExpense, clearSelectedExpense ,
 
   const handleAddOrUpdateExpense = async (e) => {
     e.preventDefault();
-    if (isEditing) {
-      await firestore.updateExpense(firestore.currentUser.uid, expenseId, expense, amount);
-      clearSelectedExpense();
-      
-    } else {
-      const newExpense = await firestore.addExpense(expense, amount);
-      addExpenseToList(newExpense);
+    try {
+      if (isEditing) {
+        if (firestore.currentUser && firestore.currentUser.uid) {
+          await firestore.updateExpense(
+            firestore.currentUser.uid,
+            expenseId,
+            expense,
+            amount
+          );
+          clearSelectedExpense();
+        } else {
+          throw new Error("User not authenticated");
+        }
+      } else {
+        const newExpense = await firestore.addExpense(expense, amount);
+        addExpenseToList(newExpense);
+      }
+      setExpense("");
+      setAmount(0);
+      setIsEditing(false);
+      setExpenseId(null);
+      loadExpenses();
+    } catch (error) {
+      console.error("Error adding/updating expense:", error);
     }
-    setExpense("");
-    setAmount(0);
-    setIsEditing(false);
-    setExpenseId(null);
-    loadExpenses();
   };
 
   return (
