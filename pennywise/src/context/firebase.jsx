@@ -19,6 +19,7 @@ import {
   query,
   orderBy,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 // Firebase configuration
@@ -73,7 +74,7 @@ export const FirebaseProvider = ({ children }) => {
       "expenses",
       getDateInYearMonthFormat(),
       "dailyExpenses",
-      expenseId
+      expenseId,
     );
     
     try {
@@ -87,6 +88,37 @@ export const FirebaseProvider = ({ children }) => {
       return "Error deleting document: " + error;
     }
   };
+  
+  //update Expense
+
+  const updateExpense = async (userId , expenseId , description , amount) => {
+    if (!currentUser) return; 
+    const expenseDocRef = doc(
+      firestore,
+      "users",
+      userId,
+      "expenses",
+      getDateInYearMonthFormat(),
+      "dailyExpenses",
+      expenseId,
+    );
+    try{
+      await updateDoc(expenseDocRef , {
+        description,
+        amount: parseFloat(amount),
+        
+      });
+      console.log("Document updated successfully!");
+      alert("Expense updated successfully!");
+      return "Document updated successfully!";
+    }catch(error){
+      console.error("Error updating document: ", error);
+      alert("Failed to update expense. Please try again.");
+      return "Error updating document: " + error;
+    }
+  };
+
+
 
   // Fetch expenses
   const fetchExpenses = async (userId) => {
@@ -218,6 +250,7 @@ export const FirebaseProvider = ({ children }) => {
         addExpense, // Expose addExpense function
         fetchExpenses,
         deleteExpense,
+        updateExpense,
 
       }}
     >

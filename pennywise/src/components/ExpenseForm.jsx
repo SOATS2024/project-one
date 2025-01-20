@@ -1,18 +1,45 @@
-import { Plus } from "lucide-react";
+import { Plus, Edit3 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const ExpenseForm = ({ addExpenseToList }) => {
+const ExpenseForm = ({ addExpenseToList, selectedExpense, clearSelectedExpense , loadExpenses }) => {
   const firestore = useFirebase();
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState(0);
-  const handleAddExpense = async (e) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [expenseId, setExpenseId] = useState(null);
+
+  useEffect(() => {
+    if (selectedExpense) {
+      setExpense(selectedExpense.description);
+      setAmount(selectedExpense.amount);
+      setIsEditing(true);
+      setExpenseId(selectedExpense.id);
+    } else {
+      setExpense("");
+      setAmount(0);
+      setIsEditing(false);
+      setExpenseId(null);
+    }
+  }, [selectedExpense]);
+
+  const handleAddOrUpdateExpense = async (e) => {
     e.preventDefault();
-    const newExpense = await firestore.addExpense(expense, amount);
-    addExpenseToList(newExpense);
+    if (isEditing) {
+      await firestore.updateExpense(firestore.currentUser.uid, expenseId, expense, amount);
+      clearSelectedExpense();
+      
+    } else {
+      const newExpense = await firestore.addExpense(expense, amount);
+      addExpenseToList(newExpense);
+    }
     setExpense("");
     setAmount(0);
+    setIsEditing(false);
+    setExpenseId(null);
+    loadExpenses();
   };
+
   return (
     <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[220px]">
       <div className="flex flex-row space-x-8 w-full ">
@@ -35,7 +62,7 @@ const ExpenseForm = ({ addExpenseToList }) => {
         </div>
         <div className="flex flex-col w-full gap-1">
           <label
-            htmlFor="description"
+            htmlFor="amount"
             className="block text-base font-medium text-text font-header uppercase"
           >
             Amount
@@ -55,12 +82,12 @@ const ExpenseForm = ({ addExpenseToList }) => {
         <button
           type="button"
           onClick={(e) => {
-            handleAddExpense(e);
+            handleAddOrUpdateExpense(e);
           }}
           className=" bg-secondary px-10 p-3 pl-14 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-lg w-full flex items-center justify-center gap-2"
         >
-          <Plus strokeWidth={1.5} />
-          Add Expense
+          {isEditing ? <Edit3 strokeWidth={1.5} /> : <Plus strokeWidth={1.5} />}
+          {isEditing ? "Update Expense" : "Add Expense"}
         </button>
       </div>
     </div>
