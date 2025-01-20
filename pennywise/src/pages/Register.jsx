@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useFirebase } from "../context/firebase";
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 
-const Signup = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
@@ -51,7 +51,7 @@ const Signup = () => {
     }
   };
 
-  const handleLogin = () => {
+  const routetoLogin = () => {
     navigate("/login");
   };
   return (
@@ -233,7 +233,7 @@ const Signup = () => {
           <button
             type="button"
             className="text-secondary font-bold hover:text-hover_secondary"
-            onClick={handleLogin}
+            onClick={routetoLogin}
           >
             Login
           </button>
@@ -243,4 +243,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;

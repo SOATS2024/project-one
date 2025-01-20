@@ -4,7 +4,8 @@ import { Edit, Trash, RefreshCw } from "lucide-react";
 import ExpenseForm from "./ExpenseForm";
 
 const ExpenseList = () => {
-  const { currentUser, fetchExpenses, deleteExpense, updateExpense } = useFirebase();
+  const { currentUser, fetchExpenses, deleteExpense, updateExpense } =
+    useFirebase();
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -55,7 +56,12 @@ const ExpenseList = () => {
   if (expenses.length === 0) {
     return (
       <div className="m-5 mt-0 w-full flex items-start justify-center gap-5">
-        <ExpenseForm addExpenseToList={addExpenseToList} selectedExpense={selectedExpense} clearSelectedExpense={clearSelectedExpense} loadExpenses={loadExpenses} />
+        <ExpenseForm
+          addExpenseToList={addExpenseToList}
+          selectedExpense={selectedExpense}
+          clearSelectedExpense={clearSelectedExpense}
+          loadExpenses={loadExpenses}
+        />
         <div>No expenses found.</div>
         <table className="w-full text-left min-w-max">
           <thead className="font-header text-lg bg-secondary border-b border-gray-300">
@@ -101,7 +107,11 @@ const ExpenseList = () => {
 
   return (
     <div className="m-5 mt-0 w-full flex items-start justify-center gap-5">
-      <ExpenseForm addExpenseToList={addExpenseToList} selectedExpense={selectedExpense} clearSelectedExpense={clearSelectedExpense} />
+      <ExpenseForm
+        addExpenseToList={addExpenseToList}
+        selectedExpense={selectedExpense}
+        clearSelectedExpense={clearSelectedExpense}
+      />
       <div className="relative flex flex-col w-full h-full text-gray-700 font-content bg-white shadow-md rounded-lg">
         <table className="w-full text-left min-w-max">
           <thead className="font-header text-lg bg-secondary border-b border-gray-300 rounded-lg">

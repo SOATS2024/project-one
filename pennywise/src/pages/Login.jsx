@@ -32,21 +32,34 @@ const Login = () => {
       navigate("/dashboard");
     } catch {
       setError("Error logging in to your account");
+      try {
+        await firestore.signInWithEmail();
+        navigate("/dashboard");
+      } catch {
+        setError("Error logging in to your account");
+      }
     }
-  };
 
-  const handleGoogle = async () => {
+    const handleGoogle = async () => {
+      try {
+        await firebase.withGoogle();
+        navigate("/dashboard");
+      } catch {
+        setError("Error logging in with Google");
+      }
+    };
     try {
-      await withGoogle();
+      await firestore.withGoogle();
       navigate("/dashboard");
     } catch {
       setError("Error logging in with Google");
     }
   };
 
-  const handleSignUp = () => {
-    navigate("/signup");
+  const routetoRegister = () => {
+    navigate("/register");
   };
+
   return (
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
@@ -169,12 +182,11 @@ const Login = () => {
           </button>
         </div>
         <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
-          <div className="font-semibold">Don't have an account?</div>
+          <div className="font-semibold">Don&apos;t have an account?</div>
           <button
             type="button"
             className="text-secondary font-bold hover:text-hover_secondary"
-            onClick={handleSignUp}
-            //We can add Link to here instead of all this
+            onClick={routetoRegister}
           >
             Sign Up
           </button>

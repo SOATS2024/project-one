@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 const Welcome = () => {
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    navigate("/signup");
+  const routetoRegister = () => {
+    navigate("/register");
   };
   return (
     <div className="min-h-screen bg-background">
@@ -29,7 +29,7 @@ const Welcome = () => {
             <button
               type="button"
               className="inline-flex bg-secondary px-14 py-5 rounded-md font-bold text-white hover:bg-hover_secondary font-content"
-              onClick={handleSignUp}
+              onClick={routetoRegister}
             >
               Get Started
               <span className="ml-2">
