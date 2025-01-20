@@ -41,7 +41,7 @@ const ExpenseForm = ({ addExpenseToList }) => {
             Amount
           </label>
           <input
-            type="text"
+            type="number"
             name="amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}

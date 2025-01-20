@@ -59,7 +59,7 @@ const Signup = () => {
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div>
           <h2 className=" text-center text-3xl font-bold text-text font-header">
-            Sign Up for <span className="font-pennywise">PennyWise</span>
+            Sign Up
           </h2>
         </div>
         <form className="space-y-6">
@@ -226,8 +226,8 @@ const Signup = () => {
             Continue with Google
           </button>
         </div>
-        <div className="flex mx-3 mt-5 space-x-1 justify-center">
-          <div className="font-semibold font-header">
+        <div className="flex mx-3 mt-5 space-x-1 justify-center tracking-[0.12%]">
+          <div className="font-bold font-header text-gray-600">
             Already have an account?
           </div>
           <button
