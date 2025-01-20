@@ -1,117 +1,166 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
-import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import Logo from "../components/Logo";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
-  const [email, setEmail] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [cpassword, setCPassword] = useState(null);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const firebase = useFirebase();
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    if (!username || !email || !password || !cpassword) {
+      setError("All fields are required");
+      return false;
+    }
+
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      return false;
+    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
-      return;
+      return false;
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+      return false;
     }
 
     if (password !== cpassword) {
       setError("Passwords do not match");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!validateForm()) {
       return;
     }
 
-    if (!email || !password || !cpassword) {
-      setError("All fields are required");
-      return;
-    }
-
+    setLoading(true);
     try {
-      await firebase.signUpUserWithEmailAndPassword(username, email, password);
-      navigate("/dashboard");
-    } catch {
-      setError("An error occurred while creating your account");
+      await firebase.signUpWithEmail(email, password, username);
+    } catch (error) {
+      console.error("Registration error:", error);
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email is already registered");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Invalid email format");
+      } else if (error.code === "auth/weak-password") {
+        setError("Password is too weak");
+      } else {
+        setError("Failed to create account. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogle = async () => {
     try {
-      await firebase.withGoogle(email, password);
-      navigate("/dashboard");
-    } catch {
-      setError("Error logging in with Google");
+      setLoading(true);
+      setError(null);
+      await firebase.withGoogle();
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setError("Error signing in with Google");
+    } finally {
+      setLoading(false);
     }
   };
 
   const routetoLogin = () => {
     navigate("/login");
   };
+
   return (
-    <div className="flex justify-center items-center bg-background min-h-screen overflow-y-hidden">
+    <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
-        <div>
-          <h2 className=" text-center text-3xl font-bold text-text font-header">
-            Sign Up
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
+            {error}
+          </div>
+        )}
+        <div className="mb-4">
+          <h2 className="text-center text-3xl font-bold text-text font-header">
+            Create Account <br />
+            <span className="flex items-center justify-center font-pennywise">
+              <Logo height={60} width={60} />
+              Penny<span className="text-secondary">Wise</span>{" "}
+            </span>
           </h2>
         </div>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
             <div>
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-medium text-text font-header"
-                >
-                  Username
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    name="username"
-                    id="username"
-                    required
-                    className="mt-1 mb-4 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
-                    placeholder="Enter your Full Name"
-                  />
-                  <User
-                    className="absolute inset-y-0 pt-2 pl-3 h-8 w-8 pointer-events-none left-0 text-gray-400"
-                    strokeWidth={1.5}
-                  />
-                </div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-text font-header"
+              >
+                Username
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  name="username"
+                  id="username"
+                  disabled={loading}
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
+                  placeholder="Enter your Username"
+                />
+                <User
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  strokeWidth={1.5}
+                />
               </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-text font-header"
-                >
-                  Email Address
-                </label>
-                <div className="relative">
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
-                    placeholder="Enter your Email Address"
-                  />
-                  <Mail
-                    className="absolute inset-y-0 pt-2 pl-3 h-8 w-8 pointer-events-none left-0 text-gray-400"
-                    strokeWidth={1.5}
-                  />
-                </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-text font-header"
+              >
+                Email Address
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  id="email"
+                  disabled={loading}
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
+                  placeholder="Enter your Email Address"
+                />
+                <Mail
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  strokeWidth={1.5}
+                />
               </div>
             </div>
             <div>
@@ -123,21 +172,23 @@ const Register = () => {
               </label>
               <div className="relative">
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
                   type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   name="password"
                   id="password"
+                  disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
                   placeholder="Enter your Password"
                 />
                 <Lock
-                  className="absolute inset-y-0 left-0 flex items-center pt-2 pl-3 h-8 w-8 text-gray-400 pointer-events-none"
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
                   strokeWidth={1.5}
                 />
                 <button
                   type="button"
+                  disabled={loading}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -151,28 +202,30 @@ const Register = () => {
             </div>
             <div>
               <label
-                htmlFor="password"
+                htmlFor="cpassword"
                 className="block text-sm font-medium text-text font-header"
               >
                 Confirm Password
               </label>
               <div className="relative">
                 <input
-                  onChange={(e) => setCPassword(e.target.value)}
-                  value={cpassword}
                   type={showCPassword ? "text" : "password"}
+                  value={cpassword}
+                  onChange={(e) => setCPassword(e.target.value)}
                   name="cpassword"
                   id="cpassword"
+                  disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content"
-                  placeholder="Confirm Password"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
+                  placeholder="Confirm your Password"
                 />
                 <Lock
-                  className="absolute inset-y-0 left-0 flex items-center pt-2 pl-3 h-8 w-8 text-gray-400 pointer-events-none"
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
                   strokeWidth={1.5}
                 />
                 <button
                   type="button"
+                  disabled={loading}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowCPassword(!showCPassword)}
                 >
@@ -184,26 +237,38 @@ const Register = () => {
                 </button>
               </div>
             </div>
-
-            <div className="flex pt-4">
+            <div className="flex space-x-4">
               <button
-                onClick={handleSubmit}
-                className="bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header"
+                type="submit"
+                disabled={loading}
+                className={`bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Sign Up
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin inline mr-2" />
+                    Creating Account...
+                  </>
+                ) : (
+                  "Sign Up"
+                )}
               </button>
             </div>
           </div>
         </form>
-        <div className="flex flex-row justify-center items-center px-3">
-          <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
-          <span className="mx-3 font-header">Or</span>
-          <span className="h-[1px] w-full bg-gray-300 rounded-lg"></span>
+        <div className="flex justify-center items-center px-3">
+          <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
+          <span className="mx-2 font-header">Or</span>
+          <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
         </div>
         <div className="m-3">
           <button
             onClick={handleGoogle}
-            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 font-header"
+            disabled={loading}
+            className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path
@@ -223,15 +288,16 @@ const Register = () => {
                 fill="#EA4335"
               />
             </svg>
-            Continue with Google
+            <span className="font-content">
+              {loading ? "Connecting..." : "Continue with Google"}
+            </span>
           </button>
         </div>
-        <div className="flex mx-3 mt-5 space-x-1 justify-center tracking-[0.12%]">
-          <div className="font-bold font-header text-gray-600">
-            Already have an account?
-          </div>
+        <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
+          <div className="font-semibold">Already have an account?</div>
           <button
             type="button"
+            disabled={loading}
             className="text-secondary font-bold hover:text-hover_secondary"
             onClick={routetoLogin}
           >
@@ -243,4 +309,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export { Register };

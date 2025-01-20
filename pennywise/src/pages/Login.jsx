@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import Logo from "../components/Logo";
@@ -16,39 +16,35 @@ const Login = () => {
   const [error, setError] = useState(null);
   const MAX_ATTEMPTS = 3;
 
-  useEffect(() => {
-    if (firebase.currentUser) {
-      const remembered = localStorage.getItem("rememberedUser");
-      if (remembered) {
-        navigate("/dashboard");
-      }
-    }
-  }, [firebase.currentUser, navigate]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    if (loginAttempts >= MAX_ATTEMPTS) {
-      setError("Too many failed attempts. Please try again later.");
-      setLoading(false);
-      return;
-    }
-
+  const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
-      setLoading(false);
-      return;
+      return false;
     }
 
     if (!email || !password) {
       setError("All fields are required");
-      setLoading(false);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    if (loginAttempts >= MAX_ATTEMPTS) {
+      setError("Too many failed attempts. Please try again later.");
       return;
     }
 
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
     try {
       const user = await firebase.signInWithEmail(email, password);
       if (user) {
@@ -58,10 +54,10 @@ const Login = () => {
         } else {
           localStorage.removeItem("rememberedUser");
         }
-        navigate("/dashboard");
       }
     } catch (error) {
       setLoginAttempts((prev) => prev + 1);
+      console.error("Login error:", error);
       if (error.code === "auth/invalid-credential") {
         setError(
           `Invalid email or password - ${
@@ -70,7 +66,6 @@ const Login = () => {
         );
       } else {
         setError("Error logging in to your account");
-        console.error(error);
       }
     } finally {
       setLoading(false);
@@ -80,16 +75,14 @@ const Login = () => {
   const handleGoogle = async () => {
     try {
       setLoading(true);
+      setError(null);
       const user = await firebase.withGoogle();
-      if (user) {
-        if (rememberMe) {
-          localStorage.setItem("rememberedUser", "true");
-        }
-        navigate("/dashboard");
+      if (user && rememberMe) {
+        localStorage.setItem("rememberedUser", "true");
       }
     } catch (error) {
-      setError("Error logging in with Google");
-      console.error(error);
+      console.error("Google sign-in error:", error);
+      setError("Error signing in with Google");
     } finally {
       setLoading(false);
     }
@@ -109,7 +102,7 @@ const Login = () => {
         )}
         <div className="mb-4">
           <h2 className="text-center text-3xl font-bold text-text font-header">
-            Welcome to <br />
+            Welcome Back <br />
             <span className="flex items-center justify-center font-pennywise">
               <Logo height={60} width={60} />
               Penny<span className="text-secondary">Wise</span>{" "}
@@ -283,4 +276,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export { Login };
