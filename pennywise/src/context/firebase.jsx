@@ -4,6 +4,8 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  sendEmailVerification,
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -96,6 +98,24 @@ export const FirebaseProvider = ({ children }) => {
       return userCredential.user;
     } catch (error) {
       console.error("Error during sign-in:", error);
+      throw error;
+    }
+  };
+
+  const forgotPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      throw error;
+    }
+  };
+
+  const verifyEmail = async (email) => {
+    try {
+      await sendEmailVerification(auth, email);
+    } catch (error) {
+      console.error("Error sending verification email:", error);
       throw error;
     }
   };
@@ -226,12 +246,14 @@ export const FirebaseProvider = ({ children }) => {
     loading,
     signUpWithEmail,
     signInWithEmail,
+    forgotPassword,
+    verifyEmail,
     withGoogle,
     logOut,
     addExpense,
     fetchExpenses,
     deleteExpense,
-    updateExpense,
+    updateExpense
   };
 
   return (
