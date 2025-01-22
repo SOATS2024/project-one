@@ -52,11 +52,11 @@ const Login = () => {
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
         <div className="mb-4">
-          <h2 className=" text-center text-3xl font-bold text-text font-header">
+          <h2 className="text-center text-3xl font-bold text-text font-header">
             Welcome to <br />
             <span className="flex items-center justify-center font-pennywise">
               <Logo height={60} width={60} />
-              Penny<span className="text-secondary">Wise</span>{" "}
+              enny<span className="text-secondary">Wise</span>{" "}
             </span>
           </h2>
         </div>
@@ -174,7 +174,7 @@ const Login = () => {
           </button>
         </div>
         <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
-          <div className="font-semibold">Don't have an account?</div>
+          <div className="font-bold text-gray-600">Don't have an account?</div>
           <button
             type="button"
             className="text-secondary font-bold hover:text-hover_secondary"

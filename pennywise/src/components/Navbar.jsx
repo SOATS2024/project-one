@@ -16,10 +16,10 @@ const Navbar = ({ isWelcome }) => {
       {isWelcome ? (
         <button
           type="button"
-          className="bg-white px-4 py-1.5 rounded-md text-primary border-2 border-primary text-base font-medium hover:bg-background font-content"
+          className=" px-4 py-1.5 rounded-md text-white bg-secondary text-base font-medium hover:bg-hover_secondary font-content"
           onClick={handleLogin}
         >
-          Login
+          Get Started
         </button>
       ) : (
         <span></span>

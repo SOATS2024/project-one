@@ -2,6 +2,8 @@ import Navbar from "../components/Navbar";
 import ContentTile from "../components/ContentTile";
 import { ArrowRightIcon, PiggyBank } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
+import Glint from "../components/Glint";
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -33,15 +35,50 @@ const Welcome = () => {
               className="inline-flex bg-secondary px-14 py-5 rounded-md font-bold text-white hover:bg-hover_secondary font-content"
               onClick={handleSignUp}
             >
-              Get Started
+              Start Tracking
               <span className="ml-2">
                 <ArrowRightIcon />
               </span>
             </button>
           </div>
         </div>
-        <div className="md:hidden">
-          {/* This div will hold the animation */}
+        <div className="w-[55%] h-full relative items-center justify-center">
+          <div className="">
+            <div className="">
+              {/* Top right coin */}
+              <div className="">
+                <div className="absolute right-[80px] custom_brp5:right-[160px] custom_brp4:right-[300px] custom_brp3:right-[400px] custom_brp2:right-[500px] custom_brp1:right-[600px] top-1 transform rotate-45 animate-fadeIn">
+                  <Logo isLogo={false} height={150} width={150} />
+                </div>
+                <div className="absolute right-[70px] custom_brp5:right-[150px] custom_brp4:right-[290px] custom_brp3:right-[390px] custom_brp2:right-[490px] custom_brp1:right-[590px] top-[-10px] ">
+                  <Glint height={100} width={100} delay="1s" />
+                </div>
+              </div>
+
+              {/* Middle right coin */}
+              <div className="">
+                <div className="absolute right-[80px] custom_brp5:right-[150px] custom_brp4:right-[200px] custom_brp3:right-[250px] custom_brp2:right-[350px] custom_brp1:right-[450px] top-[275px] custom_brp5:top-[235px] custom_brp4:top-[195px] custom_brp3:top-[145px] transform -rotate-45 animate-fadeIn">
+                  <Logo isLogo={false} height={110} width={110} />
+                </div>
+                <div className="absolute right-[80px] custom_brp5:right-[155px] custom_brp4:right-[205px] custom_brp3:right-[255px] custom_brp2:right-[355px] custom_brp1:right-[450px] top-[272px] custom_brp5:top-[232px] custom_brp4:top-[192px] custom_brp3:top-[142px]">
+                  <Glint height={60} width={60} delay="2s" />
+                </div>
+              </div>
+
+              {/* Bottom right coin */}
+              <div className="">
+                <div className="absolute right-[0px] custom_brp4:right-[50px] custom_brp2:right-[150px] custom_brp1:right-[250px] top-[140px] custom_brp5:top-[105px] custom_brp4:top-[45px] transform rotate-12 animate-fadeIn">
+                  <Logo isLogo={false} height={130} width={130} />
+                </div>
+                <div
+                  className="absolute right-[-5px] custom_brp4:right-[45px] custom_brp2:right-[145px] custom_brp1:right-[245px] top-[125px] custom_brp5:top-[95px] custom_brp4:top-[35px] animate-fadeIn"
+                  style={{ animationDelay: "1.5s" }}
+                >
+                  <Glint height={80} width={80} delay="1.5s" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex bg-white h-full mt-3 shadow-md w-full">

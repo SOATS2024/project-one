@@ -11,16 +11,6 @@ export default {
         secondary: "#059669", 
         background: "#ecfdf5",
         hover_secondary: "#036345",
-        //////////////////////////////////
-        // primary: "#9c013a",
-        // secondary: "#cb014b",
-        // background: "#ffe6ef",
-        // hover_secondary: "#980138",
-        //////////////////////////////////
-        // primary: "#1D1616",
-        // secondary: "#8E1616", 
-        // background: "#EEEEEE",
-        // hover_secondary: "#6e1111",
         text: "#000000",
       },
       fontFamily: {
@@ -57,10 +47,18 @@ export default {
       animation: {
         fadeIn: 'fadeIn 1s ease-in',
         slideUp: 'slideUp 1.5s ease-out',
-        fadeSlideUp: 'fadeSlideUp 1.5s ease-out 2s forwards'
+        fadeSlideUp: 'fadeSlideUp 1.5s ease-out 2s forwards',
+        spinCustom: 'spin 2.5s linear infinite',
+        pingCustom: 'ping 2.5s linear infinite'
       },
+      
       screens: {
-        'custom_md': '850px'
+        'custom_md': '850px',
+        'custom_brp1': '1358px',
+        'custom_brp2': '1134px',
+        'custom_brp3': '941px',
+        'custom_brp4': '789px',
+        'custom_brp5': '558px',
       }
     },
   },
