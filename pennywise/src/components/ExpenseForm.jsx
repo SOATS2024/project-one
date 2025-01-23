@@ -46,21 +46,16 @@ const ExpenseForm = ({
     e.preventDefault();
     setError(null);
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setLoading(true);
     try {
       if (isEditing) {
-        if (!firestore.currentUser?.uid) {
-          throw new Error("User not authenticated");
-        }
         await firestore.updateExpense(
-          firestore.currentUser.uid,
-          expenseId,
+          selectedExpense.id,
           expense,
-          Number(amount)
+          amount,
+          selectedExpense.path // Pass the stored path
         );
         clearSelectedExpense();
       } else {
@@ -75,9 +70,7 @@ const ExpenseForm = ({
     } catch (error) {
       console.error("Error adding/updating expense:", error);
       setError(
-        isEditing
-          ? "Failed to update expense. Please try again."
-          : "Failed to add expense. Please try again."
+        isEditing ? "Failed to update expense" : "Failed to add expense"
       );
     } finally {
       setLoading(false);
@@ -85,7 +78,7 @@ const ExpenseForm = ({
   };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg m-5 mr-0 p-7 gap-4 rounded-lg max-h-[220px]">
+    <div className="flex flex-col bg-white shadow-lg mb-5 mr-0 px-7 py-8 gap-5 rounded-lg max-h-[220px]">
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
           {error}
