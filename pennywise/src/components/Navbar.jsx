@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
+
 const Navbar = ({ isWelcome }) => {
   const navigate = useNavigate();
+
   const handleLogin = () => {
     navigate("/login");
   };
+
+  const handleContactUs = () => {
+    navigate("/contact");
+  };
+
   return (
     <div className="flex flex-row bg-white justify-between px-5 pb-5 pt-3 shadow-md">
       <div className="flex flex-row items-center justify-center">
@@ -13,17 +20,24 @@ const Navbar = ({ isWelcome }) => {
           enny<span className="text-secondary">Wise</span>
         </div>
       </div>
-      {isWelcome ? (
+      <div className="flex flex-row items-center space-x-4">
+        {isWelcome && (
+          <button
+            type="button"
+            className="bg-white px-4 py-1.5 rounded-md text-primary border-2 border-primary text-base font-medium hover:bg-background font-content"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+        )}
         <button
           type="button"
-          className=" px-4 py-1.5 rounded-md text-white bg-secondary text-base font-medium hover:bg-hover_secondary font-content"
-          onClick={handleLogin}
+          className="bg-white px-4 py-1.5 rounded-md text-primary border-2 border-primary text-base font-medium hover:bg-background font-content"
+          onClick={handleContactUs}
         >
-          Get Started
+          Contact Us
         </button>
-      ) : (
-        <span></span>
-      )}
+      </div>
     </div>
   );
 };

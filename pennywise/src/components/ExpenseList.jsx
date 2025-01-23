@@ -3,7 +3,7 @@ import { useFirebase } from "../context/firebase";
 import { Edit, Trash, RefreshCw, Loader2 } from "lucide-react";
 import ExpenseForm from "./ExpenseForm";
 
-const ExpenseList = () => {
+const ExpenseList = ({ timeFrame }) => {
   const firebase = useFirebase();
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const ExpenseList = () => {
   const loadExpenses = async () => {
     try {
       setLoading(true);
-      const data = await firebase.fetchExpenses();
+      const data = await firebase.fetchExpensesByTimeFrame(timeFrame);
       setExpenses(data || []);
       setError(null);
     } catch (error) {
@@ -30,7 +30,7 @@ const ExpenseList = () => {
 
   useEffect(() => {
     loadExpenses();
-  }, []);
+  }, [timeFrame]);
 
   const handleDeleteExpense = async (expenseId) => {
     try {
@@ -62,6 +62,16 @@ const ExpenseList = () => {
     );
   }
 
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div className="flex justify-stretch items-start gap-5">
       <div className="m-5 mt-0 w-full flex flex-col items-start justify-center gap-5">
@@ -85,14 +95,15 @@ const ExpenseList = () => {
                 <th className="p-4">No.</th>
                 <th className="p-4">Description</th>
                 <th className="p-4">Amount</th>
+                <th className="p-4">Date</th>
                 <th className="p-4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {expenses.length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="p-4 text-center">
-                    No expenses found.
+                  <td colSpan="5" className="p-4 text-center">
+                    No expenses found for this time period.
                   </td>
                 </tr>
               ) : (
@@ -104,6 +115,7 @@ const ExpenseList = () => {
                       <td className="p-4">{index + 1}</td>
                       <td className="p-4">{expense.description}</td>
                       <td className="p-4">${expense.amount.toFixed(2)}</td>
+                      <td className="p-4">{formatDate(expense.createdAt)}</td>
                       <td className="p-4 space-x-3">
                         <button
                           type="button"
@@ -125,7 +137,7 @@ const ExpenseList = () => {
               )}
             </tbody>
           </table>
-          <div className="flex justify-center p-4 gap-3">
+          <div className="flex justify-between items-center p-4">
             <button
               type="button"
               onClick={loadExpenses}
@@ -139,9 +151,13 @@ const ExpenseList = () => {
               )}
               Reload
             </button>
+            <div className="text-xl font-semibold text-secondary">
+              Total: ${calculateTotal().toFixed(2)}
+            </div>
           </div>
         </div>
       </div>
+
       <div className="sticky top-5 m-5 mt-0 w-full max-w-sm">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-700 font-header mb-4">
