@@ -14,7 +14,7 @@ const Welcome = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar isWelcome={true} />
-      <div className="flex flex-row px-3 py-12">
+      <div className="flex flex-row flex-wrap px-3 py-12">
         <div className="flex flex-col w-[45%] pl-6 animate-slideUp">
           <div className="text-4xl sm:text-6xl">
             <div className="font-extrabold font-header">
@@ -70,10 +70,7 @@ const Welcome = () => {
                 <div className="absolute right-[0px] custom_brp4:right-[50px] custom_brp2:right-[150px] custom_brp1:right-[250px] top-[140px] custom_brp5:top-[105px] custom_brp4:top-[45px] transform rotate-12 animate-fadeIn">
                   <Logo isLogo={false} height={130} width={130} />
                 </div>
-                <div
-                  className="absolute right-[-5px] custom_brp4:right-[45px] custom_brp2:right-[145px] custom_brp1:right-[245px] top-[125px] custom_brp5:top-[95px] custom_brp4:top-[35px] animate-fadeIn"
-                  style={{ animationDelay: "1.5s" }}
-                >
+                <div className="absolute right-[-5px] custom_brp4:right-[45px] custom_brp2:right-[145px] custom_brp1:right-[245px] top-[125px] custom_brp5:top-[95px] custom_brp4:top-[35px] animate-fadeIn">
                   <Glint height={80} width={80} delay="1.5s" />
                 </div>
               </div>
