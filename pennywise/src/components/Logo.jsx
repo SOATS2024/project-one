@@ -44,6 +44,7 @@ const Logo = ({ width = 40, height = 40, isLogo = true }) => {
             stroke="#90EE90"
             strokeWidth="0.1"
           />
+          {/* Change font-size to fontSize, font-weight to fontWeight, text-anchor to textAnchor */}
           <text
             x="20"
             y="22"

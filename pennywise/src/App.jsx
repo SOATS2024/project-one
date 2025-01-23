@@ -1,21 +1,52 @@
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import Login from "./pages/Login.jsx";
-import Signup from "./pages/Signup.jsx";
-import Welcome from "./pages/Welcome.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
+import { Welcome } from "./pages/Welcome";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { Dashboard } from "./pages/Dashboard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { PublicRoute } from "./routes/PublicRoute";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Welcome />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Welcome />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

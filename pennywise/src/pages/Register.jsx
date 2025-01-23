@@ -1,30 +1,49 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
 import Logo from "../components/Logo";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [loginAttempts, setLoginAttempts] = useState(0);
   const firebase = useFirebase();
   const [error, setError] = useState(null);
-  const MAX_ATTEMPTS = 3;
 
   const validateForm = () => {
+    if (!username || !email || !password || !cpassword) {
+      setError("All fields are required");
+      return false;
+    }
+
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      return false;
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
       return false;
     }
 
-    if (!email || !password) {
-      setError("All fields are required");
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+      return false;
+    }
+
+    if (password !== cpassword) {
+      setError("Passwords do not match");
       return false;
     }
 
@@ -35,37 +54,23 @@ const Login = () => {
     e.preventDefault();
     setError(null);
 
-    if (loginAttempts >= MAX_ATTEMPTS) {
-      setError("Too many failed attempts. Please try again later.");
-      return;
-    }
-
     if (!validateForm()) {
       return;
     }
 
     setLoading(true);
     try {
-      const user = await firebase.signInWithEmail(email, password);
-      if (user) {
-        setLoginAttempts(0);
-        if (rememberMe) {
-          localStorage.setItem("rememberedUser", "true");
-        } else {
-          localStorage.removeItem("rememberedUser");
-        }
-      }
+      await firebase.signUpWithEmail(email, password, username);
     } catch (error) {
-      setLoginAttempts((prev) => prev + 1);
-      console.error("Login error:", error);
-      if (error.code === "auth/invalid-credential") {
-        setError(
-          `Invalid email or password - ${
-            MAX_ATTEMPTS - loginAttempts
-          } attempts remaining`
-        );
+      console.error("Registration error:", error);
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email is already registered");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Invalid email format");
+      } else if (error.code === "auth/weak-password") {
+        setError("Password is too weak");
       } else {
-        setError("Error logging in to your account");
+        setError("Failed to create account. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -76,10 +81,7 @@ const Login = () => {
     try {
       setLoading(true);
       setError(null);
-      const user = await firebase.withGoogle();
-      if (user && rememberMe) {
-        localStorage.setItem("rememberedUser", "true");
-      }
+      await firebase.withGoogle();
     } catch (error) {
       console.error("Google sign-in error:", error);
       setError("Error signing in with Google");
@@ -88,8 +90,8 @@ const Login = () => {
     }
   };
 
-  const routetoRegister = () => {
-    navigate("/register");
+  const routetoLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -102,15 +104,40 @@ const Login = () => {
         )}
         <div className="mb-4">
           <h2 className="text-center text-3xl font-bold text-text font-header">
-            Welcome Back <br />
+            Create Account <br />
             <span className="flex items-center justify-center font-pennywise">
               <Logo height={60} width={60} />
-              enny<span className="text-secondary">Wise</span>{" "}
+              Penny<span className="text-secondary">Wise</span>{" "}
             </span>
           </h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-md shadow-sm space-y-4 m-3">
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-text font-header"
+              >
+                Username
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  name="username"
+                  id="username"
+                  disabled={loading}
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
+                  placeholder="Enter your Username"
+                />
+                <User
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  strokeWidth={1.5}
+                />
+              </div>
+            </div>
             <div>
               <label
                 htmlFor="email"
@@ -120,13 +147,13 @@ const Login = () => {
               </label>
               <div className="relative">
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   name="email"
                   id="email"
+                  disabled={loading}
                   required
-                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
                   className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
                   placeholder="Enter your Email Address"
                 />
@@ -145,13 +172,13 @@ const Login = () => {
               </label>
               <div className="relative">
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
                   type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   name="password"
                   id="password"
+                  disabled={loading}
                   required
-                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
                   className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
                   placeholder="Enter your Password"
                 />
@@ -161,7 +188,7 @@ const Login = () => {
                 />
                 <button
                   type="button"
-                  disabled={loading || loginAttempts >= MAX_ATTEMPTS}
+                  disabled={loading}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -173,50 +200,58 @@ const Login = () => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="remember-me"
-                  name="remember-me"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-text font-header"
-                >
-                  Remember me
-                </label>
-              </div>
-              <button
-                type="button"
-                disabled={loading}
-                className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary font-header"
+            <div>
+              <label
+                htmlFor="cpassword"
+                className="block text-sm font-medium text-text font-header"
               >
-                Forgot Password?
-              </button>
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showCPassword ? "text" : "password"}
+                  value={cpassword}
+                  onChange={(e) => setCPassword(e.target.value)}
+                  name="cpassword"
+                  id="cpassword"
+                  disabled={loading}
+                  required
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
+                  placeholder="Confirm your Password"
+                />
+                <Lock
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
+                  strokeWidth={1.5}
+                />
+                <button
+                  type="button"
+                  disabled={loading}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
+                  onClick={() => setShowCPassword(!showCPassword)}
+                >
+                  {showCPassword ? (
+                    <Eye strokeWidth={1.5} />
+                  ) : (
+                    <EyeOff strokeWidth={1.5} />
+                  )}
+                </button>
+              </div>
             </div>
             <div className="flex space-x-4">
               <button
                 type="submit"
-                disabled={loading || loginAttempts >= MAX_ATTEMPTS}
+                disabled={loading}
                 className={`bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header ${
-                  loading || loginAttempts >= MAX_ATTEMPTS
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
+                  loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
                 {loading ? (
                   <>
                     <Loader2 className="animate-spin inline mr-2" />
-                    Logging in...
+                    Creating Account...
                   </>
-                ) : loginAttempts >= MAX_ATTEMPTS ? (
-                  "Too many attempts"
                 ) : (
-                  "Login"
+                  "Sign Up"
                 )}
               </button>
             </div>
@@ -230,11 +265,9 @@ const Login = () => {
         <div className="m-3">
           <button
             onClick={handleGoogle}
-            disabled={loading || loginAttempts >= MAX_ATTEMPTS}
+            disabled={loading}
             className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ${
-              loading || loginAttempts >= MAX_ATTEMPTS
-                ? "opacity-50 cursor-not-allowed"
-                : ""
+              loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
@@ -261,14 +294,14 @@ const Login = () => {
           </button>
         </div>
         <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
-          <div className="font-semibold">Don&apos;t have an account?</div>
+          <div className="font-semibold">Already have an account?</div>
           <button
             type="button"
             disabled={loading}
             className="text-secondary font-bold hover:text-hover_secondary"
-            onClick={routetoRegister}
+            onClick={routetoLogin}
           >
-            Sign Up
+            Login
           </button>
         </div>
       </div>
@@ -276,4 +309,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Register };
