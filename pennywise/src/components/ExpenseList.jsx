@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useFirebase } from "../context/firebase";
 import { Edit, Trash, RefreshCw, Loader2, DollarSign } from "lucide-react";
 import ExpenseForm from "./ExpenseForm";
@@ -36,6 +37,7 @@ const ExpenseList = ({ timeFrame }) => {
     try {
       await firebase.deleteExpense(expenseId);
       await loadExpenses();
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setError("Failed to delete expense. Please try again.");
     }
@@ -191,6 +193,9 @@ const ExpenseList = ({ timeFrame }) => {
       </div>
     </div>
   );
+};
+ExpenseList.propTypes = {
+  timeFrame: PropTypes.string.isRequired,
 };
 
 export default ExpenseList;

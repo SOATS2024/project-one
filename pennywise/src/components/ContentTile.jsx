@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 const ContentTile = ({ icon: Icon, title, description }) => {
   return (
     <div className="flex flex-col sm:flex-row relative p-4 w-full">
@@ -17,6 +19,12 @@ const ContentTile = ({ icon: Icon, title, description }) => {
       </div>
     </div>
   );
+};
+
+ContentTile.propTypes = {
+  icon: propTypes.elementType,
+  title: propTypes.string.isRequired,
+  description: propTypes.string.isRequired,
 };
 
 export default ContentTile;

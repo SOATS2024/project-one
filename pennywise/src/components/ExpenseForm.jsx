@@ -1,4 +1,5 @@
 import { Plus, Edit3, Loader2 } from "lucide-react";
+import PropTypes from "prop-types";
 import { useFirebase } from "../context/firebase";
 import { useState, useEffect } from "react";
 
@@ -12,6 +13,7 @@ const ExpenseForm = ({
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [expenseId, setExpenseId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -153,6 +155,12 @@ const ExpenseForm = ({
       </div>
     </div>
   );
+};
+ExpenseForm.propTypes = {
+  addExpenseToList: PropTypes.func.isRequired,
+  selectedExpense: PropTypes.object,
+  clearSelectedExpense: PropTypes.func.isRequired,
+  loadExpenses: PropTypes.func.isRequired,
 };
 
 export default ExpenseForm;

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
 import ExpenseList from "../components/ExpenseList";
-import { Sidebar, SidebarItem } from "../components/Sidebar";
+import { Sidebar } from "../components/Sidebar";
+import { SidebarItem } from "../components/SidebarItem";
 import Logo from "../components/Logo";
 import {
   LayoutDashboard,
