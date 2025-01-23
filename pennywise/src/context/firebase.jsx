@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-  sendEmailVerification,
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -107,15 +107,6 @@ export const FirebaseProvider = ({ children }) => {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
       console.error("Error sending password reset email:", error);
-      throw error;
-    }
-  };
-
-  const verifyEmail = async (email) => {
-    try {
-      await sendEmailVerification(auth, email);
-    } catch (error) {
-      console.error("Error sending verification email:", error);
       throw error;
     }
   };
@@ -247,7 +238,6 @@ export const FirebaseProvider = ({ children }) => {
     signUpWithEmail,
     signInWithEmail,
     forgotPassword,
-    verifyEmail,
     withGoogle,
     logOut,
     addExpense,
@@ -262,11 +252,14 @@ export const FirebaseProvider = ({ children }) => {
     </FirebaseContext.Provider>
   );
 };
-
 export const useFirebase = () => {
   const context = useContext(FirebaseContext);
   if (!context) {
     throw new Error("useFirebase must be used within a FirebaseProvider");
   }
   return context;
+};
+
+FirebaseProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

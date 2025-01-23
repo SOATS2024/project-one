@@ -50,16 +50,6 @@ const Register = () => {
     return true;
   };
 
-  const handleEmailVerification = async () => {
-    try {
-      await firebase.verifyEmail(email);
-      alert("Verification Email sent. Please check your inbox.");
-    } catch (error) {
-      console.error("Error sending verification Email");
-      throw error;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -71,7 +61,6 @@ const Register = () => {
     setLoading(true);
     try {
       await firebase.signUpWithEmail(email, password, username);
-      await handleEmailVerification();
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);

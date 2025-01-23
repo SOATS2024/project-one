@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useFirebase } from "../context/firebase";
-import { Mail, X } from "lucide-react";
+import { Mail } from "lucide-react";
 import Logo from "../components/Logo";
+import Modal from "../components/Modal";
 
 const PasswordReset = () => {
     const navigate = useNavigate();
@@ -41,29 +42,17 @@ const PasswordReset = () => {
     };
 
     return (
-        <div className="flex justify-center items-center bg-background min-h-screen">
+    <div className="flex justify-center items-center bg-background min-h-screen">
+      <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white"></div>
             {/* Success Modal */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full mx-4">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-2xl font-header font-semibold text-text">Success!</h2>
-                            <button onClick={handleCloseModal}>
-                                <X className="h-6 w-6 text-gray-400 hover:text-gray-600" />
-                            </button>
-                        </div>
-                        <p className="text-text font-content mb-6">
-                            Password reset email has been sent successfully. Please check your inbox.
-                        </p>
-                        <button
-                            onClick={handleCloseModal}
-                            className="w-full bg-secondary text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header"
-                        >
-                            Go to Login
-                        </button>
-                    </div>
-                </div>
-            )}
+            <div className="flex justify-center items-center bg-background min-h-screen">
+                <Modal
+                isOpen={showModal}
+                onClose={handleCloseModal}
+                title="Success!"
+                message="Password reset email has been sent successfully. Please check your inbox."
+                buttonText="Go to Login"
+                />
 
             {/* Form content */}
             <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
@@ -114,6 +103,7 @@ const PasswordReset = () => {
                     </button>
                 </form>
             </div>
+        </div>
         </div>
     );
 };
