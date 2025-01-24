@@ -1,8 +1,8 @@
-import Navbar from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import ContentTile from "../components/ContentTile";
 import { ArrowRightIcon, PiggyBank } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../components/Logo";
+import { Logo } from "../components/Logo";
 import Glint from "../components/Glint";
 
 const Welcome = () => {
