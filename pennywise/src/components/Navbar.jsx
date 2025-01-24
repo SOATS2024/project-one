@@ -13,7 +13,7 @@ const Navbar = ({ isWelcome }) => {
   };
 
   return (
-    <div className="flex flex-row bg-white justify-between px-5 pb-5 pt-3 shadow-md">
+    <div className="flex flex-row bg-white  dark:bg- justify-between px-5 pb-5 pt-3 shadow-md">
       <div className="flex flex-row items-center justify-center">
         <Logo height={60} width={60} />
         <div className="font-pennywise text-3xl font-bold">

@@ -76,7 +76,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background dark:bg-dark_background">
       <Sidebar
         onLogout={handleLogout}
         logo={<Logo width={40} height={40} />}

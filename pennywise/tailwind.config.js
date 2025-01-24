@@ -8,6 +8,7 @@ export default {
         secondary: "#059669",
         background: "#ecfdf5",
         hover_secondary: "#036345",
+        text: "#000000",
         //////////////////////////////////
         // primary: "#9c013a",
         // secondary: "#cb014b",
@@ -18,7 +19,17 @@ export default {
         // secondary: "#8E1616",
         // background: "#EEEEEE",
         // hover_secondary: "#6e1111",
-        text: "#000000",
+        /////////////////////////////
+        // dark_primary: "#6fe7a2",
+        // dark_secondary: "#10b981",
+        // dark_background: "#022c22",
+        // dark_hover_secondary: "#024c37",
+        // dark_text: "#FFFFFF"
+        dark_primary: "#4ade80",
+        dark_secondary: "#10b981",
+        dark_background: "#064e3b",
+        dark_hover_secondary: "#059669",
+        dark_text: "#FFFFFF"
       },
       fontFamily: {
         pennywise: ["DM Sans", "sans-serif"],

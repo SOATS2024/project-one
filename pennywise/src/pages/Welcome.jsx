@@ -12,19 +12,19 @@ const Welcome = () => {
     navigate("/register");
   };
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark:bg-dark_background">
       <Navbar isWelcome={true} />
       <div className="flex flex-row flex-wrap px-3 py-12">
         <div className="flex flex-col w-[45%] pl-6 animate-slideUp">
           <div className="text-4xl sm:text-6xl">
-            <div className="font-extrabold font-header">
+            <div className="font-extrabold dark:text-white font-header">
               Take control of your
             </div>
-            <div className="font-extrabold mt-1 text-secondary font-header">
+            <div className="font-extrabold mt-1 text-secondary dark:text-dark_secondary font-header">
               financial future
             </div>
           </div>
-          <div className="mt-3 text-gray-600 text-base sm:text-xl font-content">
+          <div className="mt-3 text-gray-600 dark:text-white text-base sm:text-xl font-content">
             PennyWise helps you track your daily expenses effortlessly, giving
             you clear insights into your spending habits. Spend smart, save
             better!
@@ -32,7 +32,7 @@ const Welcome = () => {
           <div className="mt-5">
             <button
               type="button"
-              className="inline-flex bg-secondary px-14 py-5 rounded-md font-bold text-white hover:bg-hover_secondary font-content"
+              className="inline-flex bg-secondary dark:bg-dark_secondary px-14 py-5 rounded-md font-bold text-white hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-content"
               onClick={routetoRegister}
             >
               Start Tracking
@@ -78,7 +78,7 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-      <div className="flex bg-white h-full mt-3 shadow-md w-full">
+      <div className="flex bg-white dark:bg-[#23272E] h-full mt-3 shadow-md w-full">
         <div className="flex flex-col">
           <div className="flex flex-col custom_md:flex-row justify-between mx-4 p-7">
             <ContentTile
