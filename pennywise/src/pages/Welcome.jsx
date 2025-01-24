@@ -1,9 +1,10 @@
 import { Navbar } from "../components/Navbar";
-import ContentTile from "../components/ContentTile";
-import { ArrowRightIcon, PiggyBank } from "lucide-react";
+
+import { ArrowRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
-import Glint from "../components/Glint";
+import { Glint } from "../components/Glint";
+import Features from "../components/FeaturesSection";
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Welcome = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar isWelcome={true} />
-      <div className="flex flex-row flex-wrap px-3 py-12">
+      <div className="flex flex-row h-[90vh] flex-wrap items-center justify-center px-3 py-12 gap-4">
         <div className="flex flex-col w-[45%] pl-6 animate-slideUp">
           <div className="text-4xl sm:text-6xl">
             <div className="font-extrabold font-header">
@@ -78,31 +79,25 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-      <div className="flex bg-white h-full mt-3 shadow-md w-full">
+      <Features />
+
+      <section id="about">
+        <div className="">
+          <h2>About This Website</h2>
+          <p>
+            PennyWise is your go-to expense tracker designed to simplify money
+            management. Whether you are budgeting for the week or planning for
+            the year, our intuitive platform helps you stay on top of your
+            finances with ease.
+          </p>
+        </div>
+      </section>
+      <div className="flex bg-white h-screen mt-3 shadow-md w-full">
         <div className="flex flex-col">
-          <div className="flex flex-col custom_md:flex-row justify-between mx-4 p-7">
-            <ContentTile
-              icon={PiggyBank}
-              title="Smart Budgeting!"
-              description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"
-            />
-            <ContentTile
-              icon={PiggyBank}
-              title="Smart Budgeting!"
-              description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"
-            />
-            <ContentTile
-              icon={PiggyBank}
-              title="Smart Budgeting!"
-              description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus, perspiciatis autem maxime quo, quasi iure eaque voluptatem ab accusamus nemo earum, nam dolorum. Ad ipsam aspernatur ipsa sunt, illum blanditiis!"
-            />
-          </div>
           <div className="mt-3 items-center">
             <div className="border border-gray-200"></div>
           </div>
-          <div className="mt-5 px-4 flex text-lg font-bold font-pennywise">
-            <span>About This Website</span>
-          </div>
+          <div className="mt-5 px-4 flex text-lg font-bold font-pennywise"></div>
           <div className="mt-6 items-center">
             <div className="border border-gray-200"></div>
           </div>

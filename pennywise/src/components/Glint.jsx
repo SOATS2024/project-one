@@ -29,4 +29,4 @@ Glint.propTypes = {
   delay: PropTypes.string,
 };
 
-export default Glint;
+export { Glint };
