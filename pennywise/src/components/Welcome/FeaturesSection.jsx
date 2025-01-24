@@ -16,7 +16,7 @@ const Features = () => {
         <div className="w-full md:w-2/3 text-center md:text-left">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-200 flex items-center gap-2">
             What{" "}
-            <div className="inline-flex items-center justify-center">
+            <div className="inline-flex items-center justify-center font-pennywise">
               <span className="flex items-center justify-center ">
                 <Logo height={70} width={70} />
               </span>

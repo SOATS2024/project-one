@@ -95,19 +95,19 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-background min-h-screen">
-      <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
+    <div className="flex justify-center items-center bg-background dark:bg-dark_background min-h-screen">
+      <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white dark:bg-slate-950">
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
             {error}
           </div>
         )}
         <div className="mb-4">
-          <h2 className="text-center text-3xl font-bold text-text font-header">
+          <h2 className="text-center text-3xl font-bold text-text dark:text-gray-200 font-header">
             Create Account <br />
             <span className="flex items-center justify-center font-pennywise">
               <Logo height={60} width={60} />
-              Penny<span className="text-secondary">Wise</span>{" "}
+              enny<span className="text-secondary">Wise</span>{" "}
             </span>
           </h2>
         </div>
@@ -116,7 +116,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-text font-header"
+                className="block text-sm font-medium text-text dark:text-gray-200 font-header"
               >
                 Username
               </label>
@@ -129,11 +129,11 @@ const Register = () => {
                   id="username"
                   disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
                   placeholder="Enter your Username"
                 />
                 <User
-                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400 dark:text-gray-200"
                   strokeWidth={1.5}
                 />
               </div>
@@ -141,7 +141,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-text font-header"
+                className="block text-sm font-medium text-text dark:text-gray-200 font-header"
               >
                 Email Address
               </label>
@@ -154,11 +154,11 @@ const Register = () => {
                   id="email"
                   disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
                   placeholder="Enter your Email Address"
                 />
                 <Mail
-                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400"
+                  className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-center pointer-events-none h-8 w-8 text-gray-400 dark:text-gray-200"
                   strokeWidth={1.5}
                 />
               </div>
@@ -166,7 +166,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-text font-header"
+                className="block text-sm font-medium text-text dark:text-gray-200 font-header"
               >
                 Password
               </label>
@@ -179,17 +179,17 @@ const Register = () => {
                   id="password"
                   disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
                   placeholder="Enter your Password"
                 />
                 <Lock
-                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400 dark:text-gray-200"
                   strokeWidth={1.5}
                 />
                 <button
                   type="button"
                   disabled={loading}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary dark:text-dark_secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -203,7 +203,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="cpassword"
-                className="block text-sm font-medium text-text font-header"
+                className="block text-sm font-medium text-text dark:text-gray-200 font-header"
               >
                 Confirm Password
               </label>
@@ -216,17 +216,17 @@ const Register = () => {
                   id="cpassword"
                   disabled={loading}
                   required
-                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content disabled:opacity-50"
+                  className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
                   placeholder="Confirm your Password"
                 />
                 <Lock
-                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400"
+                  className="absolute inset-y-0 items-center flex left-0 pl-3 pt-2 h-8 w-8 pointer-events-none text-gray-400 dark:text-gray-200"
                   strokeWidth={1.5}
                 />
                 <button
                   type="button"
                   disabled={loading}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary dark:text-dark_secondary"
                   onClick={() => setShowCPassword(!showCPassword)}
                 >
                   {showCPassword ? (
@@ -241,7 +241,7 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`bg-secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary font-header ${
+                className={`bg-secondary dark:bg-dark_secondary w-full text-white dark:text-gray-200 font-medium rounded-md py-2 hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-header ${
                   loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
@@ -259,14 +259,14 @@ const Register = () => {
         </form>
         <div className="flex justify-center items-center px-3">
           <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
-          <span className="mx-2 font-header">Or</span>
+          <span className="mx-2 font-header dark:text-gray-200">Or</span>
           <span className="h-[1px] w-full bg-gray-300 rounded-md"></span>
         </div>
         <div className="m-3">
           <button
             onClick={handleGoogle}
             disabled={loading}
-            className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 ${
+            className={`w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white dark:bg-slate-950 dark:hover:bg-slate-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
@@ -294,11 +294,13 @@ const Register = () => {
           </button>
         </div>
         <div className="flex mx-3 mt-3 space-x-1 justify-center font-header">
-          <div className="font-semibold">Already have an account?</div>
+          <div className="font-semibold dark:text-gray-200">
+            Already have an account?
+          </div>
           <button
             type="button"
             disabled={loading}
-            className="text-secondary font-bold hover:text-hover_secondary"
+            className="text-secondary dark:text-dark_secondary font-bold hover:text-hover_secondary dark:hover:text-dark_hover_secondary"
             onClick={routetoLogin}
           >
             Login
