@@ -1,6 +1,6 @@
 import { ContentTile } from "../ContentTile";
 import { PiggyBank, CalendarDays, ShieldCheck } from "lucide-react";
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
 
 const Features = () => {
   return (
@@ -16,8 +16,8 @@ const Features = () => {
         <div className="w-full md:w-2/3 text-center md:text-left">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-200 flex items-center gap-2">
             What{" "}
-            <div>
-              <span className="flex items-center justify-center">
+            <div className="inline-flex items-center justify-center">
+              <span className="flex items-center justify-center ">
                 <Logo height={70} width={70} />
               </span>
               enny

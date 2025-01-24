@@ -16,12 +16,14 @@ const HeroSection = () => {
     >
       <div className="flex flex-col w-md:[45%] pl-6 animate-slideUp sm:w-full flex-wrap items-start justify-center w-1/2">
         <div className="text-4xl sm:text-6xl">
-          <div className="font-extrabold font-header">Take control of your</div>
-          <div className="font-extrabold mt-1 text-secondary font-header">
+          <div className="font-extrabold font-header dark:text-gray-200">
+            Take control of your
+          </div>
+          <div className="font-extrabold mt-1 text-secondary dark:text-dark_secondary font-header">
             financial future
           </div>
         </div>
-        <div className="mt-3 text-gray-600 text-base sm:text-xl font-content">
+        <div className="mt-3 text-gray-600 text-base sm:text-xl font-content dark:text-gray-400">
           PennyWise helps you track your daily expenses effortlessly, giving you
           clear insights into your spending habits. Spend smart, save better!
         </div>

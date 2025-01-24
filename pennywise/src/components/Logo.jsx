@@ -10,7 +10,7 @@ const Logo = ({ width = 40, height = 40, isLogo = true }) => {
         viewBox="0 0 40 40"
         width={width}
         height={height}
-        className={isLogo ? "" : " origin-center animate-spinCustom"}
+        className={isLogo ? "" : "origin-center animate-spinCustom"}
       >
         {/* <!-- Logo Container --> */}
         <g>
