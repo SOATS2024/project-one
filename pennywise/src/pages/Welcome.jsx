@@ -19,14 +19,14 @@ const Welcome = () => {
         <div className="flex sm:flex-col flex-row h-[90vh] flex-wrap items-center justify-center px-3 py-12 gap-4">
           <div className="flex flex-col w-[45%] pl-6 animate-slideUp">
             <div className="text-4xl sm:text-6xl">
-              <div className="font-extrabold dark:text-white font-header">
+              <div className="font-extrabold dark:text-gray-200 font-header">
                 Take control of your
               </div>
               <div className="font-extrabold mt-1 text-secondary dark:text-dark_secondary font-header">
                 financial future
               </div>
             </div>
-            <div className="mt-3 text-gray-600 dark:text-white text-base sm:text-xl font-content">
+            <div className="mt-3 text-gray-600 dark:text-gray-400  text-base sm:text-xl font-content">
               PennyWise helps you track your daily expenses effortlessly, giving
               you clear insights into your spending habits. Spend smart, save
               better!
@@ -34,7 +34,7 @@ const Welcome = () => {
             <div className="mt-5">
               <button
                 type="button"
-                className="inline-flex bg-secondary dark:bg-dark_secondary px-14 py-5 rounded-md font-bold text-white hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-content"
+                className="inline-flex bg-secondary dark:bg-dark_secondary px-14 py-5 rounded-md font-bold text-white dark:text-gray-200 hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-content"
                 onClick={routetoRegister}
               >
                 Start Tracking
