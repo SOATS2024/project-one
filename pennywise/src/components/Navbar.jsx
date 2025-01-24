@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Logo from "./Logo";
+import { Logo } from "./Logo";
+import PropTypes from "prop-types";
 
 const Navbar = ({ isWelcome }) => {
   const navigate = useNavigate();
@@ -41,5 +42,8 @@ const Navbar = ({ isWelcome }) => {
     </div>
   );
 };
+Navbar.propTypes = {
+  isWelcome: PropTypes.bool,
+};
 
-export default Navbar;
+export { Navbar };

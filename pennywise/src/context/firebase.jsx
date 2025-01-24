@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp, getApps, getApp } from "firebase/app";
+import PropTypes from "prop-types";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -275,6 +276,9 @@ export const FirebaseProvider = ({ children }) => {
       {children}
     </FirebaseContext.Provider>
   );
+};
+FirebaseProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useFirebase = () => {

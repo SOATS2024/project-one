@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
-import ExpenseList from "../components/ExpenseList";
-import { Sidebar, SidebarItem } from "../components/Sidebar";
-import Logo from "../components/Logo";
+import { ExpenseList } from "../components/ExpenseList";
+import { Sidebar } from "../components/Sidebar";
+import { SidebarItem } from "../components/SidebarItem";
+import { Logo } from "../components/Logo";
 import {
   LayoutDashboard,
   Calendar,
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [activeTimeFrame, setActiveTimeFrame] = useState("today");
   const [user, setUser] = useState(null);
+  const [selectedExpense, setSelectedExpense] = useState(null);
 
   useEffect(() => {
     if (firebase.currentUser) {
@@ -63,8 +65,11 @@ const Dashboard = () => {
       navigate("/login");
     } catch (error) {
       setError("Failed to log out");
-      console.error(error);
     }
+  };
+
+  const clearSelectedExpense = () => {
+    setSelectedExpense(null);
   };
 
   if (!user) {
@@ -76,7 +81,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-background dark:bg-dark_background">
+    <div className="flex  h-screen bg-background  dark:bg-dark_background">
       <Sidebar
         onLogout={handleLogout}
         logo={<Logo width={40} height={40} />}
@@ -84,7 +89,7 @@ const Dashboard = () => {
       >
         <SidebarItem
           icon={<LayoutDashboard size={20} />}
-          text="Dashboard Overview"
+          text="Dashboard"
           active={true}
         />
         <hr className="my-3" />
@@ -99,7 +104,11 @@ const Dashboard = () => {
         ))}
         <hr className="my-3" />
         <SidebarItem icon={<Settings size={20} />} text="Settings" />
-        <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+        <SidebarItem
+          icon={<LifeBuoy size={20} />}
+          text="Help"
+          onClick={() => navigate("/contact")}
+        />
         <SidebarItem
           icon={<LogOut size={20} />}
           text="Logout"
@@ -107,27 +116,34 @@ const Dashboard = () => {
         />
       </Sidebar>
 
-      <main className="flex-1 p-4 overflow-auto">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-            {error}
+      <main className="flex-1 p-4 md:p-6 lg:p-8">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+              {error}
+            </div>
+          )}
+
+          <header className="space-y-2">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 font-header">
+              {timeFrames.find((f) => f.id === activeTimeFrame)?.text ||
+                "Dashboard"}
+            </h1>
+            <p className="text-sm md:text-base text-gray-600 font-content">
+              Welcome back, {user.displayName || "User"}
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1  gap-6">
+            <div className="lg:col-span-2">
+              <ExpenseList
+                timeFrame={activeTimeFrame}
+                setSelectedExpense={setSelectedExpense}
+                clearSelectedExpense={clearSelectedExpense}
+              />
+            </div>
           </div>
-        )}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800 font-header">
-            {activeTimeFrame === "today"
-              ? "Today's Expenses"
-              : activeTimeFrame === "week"
-              ? "This Week's Expenses"
-              : activeTimeFrame === "month"
-              ? "This Month's Expenses"
-              : "All Expenses"}
-          </h1>
-          <p className="text-gray-600 font-content">
-            Welcome back, {user.displayName || "User"}
-          </p>
         </div>
-        <ExpenseList timeFrame={activeTimeFrame} />
       </main>
     </div>
   );

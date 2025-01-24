@@ -1,5 +1,3 @@
-import React from "react";
-
 const ContactUs = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-background text-text p-8 md:p-12">
@@ -46,7 +44,10 @@ const ContactUs = () => {
       <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg">
         <form>
           <div className="mb-4">
-            <label htmlFor="name" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="name"
+              className="block font-semibold mb-2 font-header"
+            >
               Your name
             </label>
             <input
@@ -57,7 +58,10 @@ const ContactUs = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="email"
+              className="block font-semibold mb-2 font-header"
+            >
               Email Address
             </label>
             <input
@@ -68,7 +72,10 @@ const ContactUs = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="message" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="message"
+              className="block font-semibold mb-2 font-header"
+            >
               Message
             </label>
             <textarea
