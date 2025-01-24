@@ -1,4 +1,4 @@
-import { ContentTile } from "../components/ContentTile";
+import { ContentTile } from "../ContentTile";
 import { PiggyBank, CalendarDays, ShieldCheck } from "lucide-react";
 
 const Features = () => {
@@ -9,7 +9,7 @@ const Features = () => {
           <img
             src="../../public/assets/features_image.jpg"
             alt="features image"
-            className="md:h-[550px] h-full w-full object-cover rounded-lg shadow-lg"
+            className="md:h-[550px] h-full w-full object-cover rounded-3xl shadow-lg"
           />
         </div>
         <div className="w-full md:w-2/3 text-center md:text-left">
@@ -43,4 +43,4 @@ const Features = () => {
   );
 };
 
-export default Features;
+export { Features };
