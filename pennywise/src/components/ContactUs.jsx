@@ -1,8 +1,6 @@
-<<<<<<< HEAD
+
 import { useState } from "react";
 
-=======
->>>>>>> abee53172221b461ce46c22bb69e9b40fe01e633
 const ContactUs = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
