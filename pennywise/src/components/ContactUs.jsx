@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import { useState } from "react";
 
+=======
+>>>>>>> abee53172221b461ce46c22bb69e9b40fe01e633
 const ContactUs = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -71,7 +74,10 @@ const ContactUs = () => {
       <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg">
         <form onSubmit={onSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="name"
+              className="block font-semibold mb-2 font-header"
+            >
               Your name
             </label>
             <input
@@ -86,7 +92,10 @@ const ContactUs = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="email"
+              className="block font-semibold mb-2 font-header"
+            >
               Email Address
             </label>
             <input
@@ -101,7 +110,10 @@ const ContactUs = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="message" className="block font-semibold mb-2 font-header">
+            <label
+              htmlFor="message"
+              className="block font-semibold mb-2 font-header"
+            >
               Message
             </label>
             <textarea

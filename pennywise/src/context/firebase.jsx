@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp, getApps, getApp } from "firebase/app";
+import PropTypes from "prop-types";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -44,6 +45,21 @@ const firestore = getFirestore(firebaseApp);
 
 setPersistence(auth, browserLocalPersistence);
 
+const getMonthYear = (date = new Date()) => {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}`;
+};
+
+const getExpenseRef = (userId, expenseId = null) => {
+  const monthYear = getMonthYear();
+  const basePath = `users/${userId}/expenses/${monthYear}/dailyExpenses`;
+  return expenseId
+    ? doc(firestore, basePath, expenseId)
+    : collection(firestore, basePath);
+};
+
 export const FirebaseProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,7 +74,7 @@ export const FirebaseProvider = ({ children }) => {
 
   const getDateRange = (timeFrame) => {
     const now = new Date();
-    const startDate = new Date();
+    const startDate = new Date(now);
 
     switch (timeFrame) {
       case "today":
@@ -68,33 +84,39 @@ export const FirebaseProvider = ({ children }) => {
         startDate.setDate(now.getDate() - 7);
         break;
       case "month":
-        startDate.setMonth(now.getMonth() - 1);
+        startDate.setDate(1);
+        startDate.setHours(0, 0, 0, 0);
         break;
       default:
-        startDate.setFullYear(2000); // All time
+        startDate.setFullYear(now.getFullYear() - 1);
     }
 
-    return { startDate, endDate: now };
+    return {
+      startDate: Timestamp.fromDate(startDate),
+      endDate: Timestamp.fromDate(now),
+    };
   };
 
   const fetchExpensesByTimeFrame = async (timeFrame = "today") => {
     if (!currentUser) throw new Error("No authenticated user!");
     try {
       const { startDate, endDate } = getDateRange(timeFrame);
-      const expensesRef = collection(firestore, "expenses");
+      const expensesRef = getExpenseRef(currentUser.uid);
+
       const q = query(
         expensesRef,
-        where("userId", "==", currentUser.uid),
-        where("createdAt", ">=", startDate),
-        where("createdAt", "<=", endDate),
-        orderBy("createdAt", "desc")
+        where("date", ">=", startDate),
+        where("date", "<=", endDate),
+        orderBy("date", "desc")
       );
 
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt.toDate(),
+        path: doc.ref.path,
+        description: doc.data().description,
+        amount: doc.data().amount,
+        date: doc.data().date.toDate(),
       }));
     } catch (error) {
       console.error("Error fetching expenses:", error);
@@ -108,29 +130,33 @@ export const FirebaseProvider = ({ children }) => {
       const expenseData = {
         description,
         amount: Number(amount),
-        userId: currentUser.uid,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        date: Timestamp.fromDate(new Date()),
       };
-      const docRef = await addDoc(
-        collection(firestore, "expenses"),
-        expenseData
-      );
-      return { id: docRef.id, ...expenseData };
+
+      const expensesRef = getExpenseRef(currentUser.uid);
+      const docRef = await addDoc(expensesRef, expenseData);
+
+      return {
+        id: docRef.id,
+        path: docRef.path,
+        ...expenseData,
+        date: expenseData.date.toDate(),
+      };
     } catch (error) {
       console.error("Error adding expense:", error);
       throw error;
     }
   };
 
-  const updateExpense = async (expenseId, description, amount) => {
+  const updateExpense = async (expenseId, description, amount, path) => {
     if (!currentUser) throw new Error("No authenticated user!");
     try {
-      const expenseRef = doc(firestore, "expenses", expenseId);
+      // Use existing document path instead of generating new one
+      const expenseRef = doc(firestore, path);
+
       await updateDoc(expenseRef, {
         description,
         amount: Number(amount),
-        updatedAt: new Date(),
       });
       return true;
     } catch (error) {
@@ -142,7 +168,7 @@ export const FirebaseProvider = ({ children }) => {
   const deleteExpense = async (expenseId) => {
     if (!currentUser) throw new Error("No authenticated user!");
     try {
-      const expenseRef = doc(firestore, "expenses", expenseId);
+      const expenseRef = getExpenseRef(currentUser.uid, expenseId);
       await deleteDoc(expenseRef);
       return true;
     } catch (error) {
@@ -160,15 +186,11 @@ export const FirebaseProvider = ({ children }) => {
       );
       const user = userCredential.user;
 
-      await updateProfile(user, {
-        displayName: username,
-      });
-
+      await updateProfile(user, { displayName: username });
       await setDoc(doc(firestore, "users", user.uid), {
         username,
         email,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        date: Timestamp.fromDate(new Date()),
       });
 
       setCurrentUser(user);
@@ -205,7 +227,7 @@ export const FirebaseProvider = ({ children }) => {
         {
           username: user.displayName,
           email: user.email,
-          updatedAt: new Date(),
+          date: Timestamp.fromDate(new Date()),
         },
         { merge: true }
       );
@@ -254,6 +276,9 @@ export const FirebaseProvider = ({ children }) => {
       {children}
     </FirebaseContext.Provider>
   );
+};
+FirebaseProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useFirebase = () => {

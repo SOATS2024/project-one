@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Logo = ({ width = 40, height = 40, isLogo = true }) => {
   return (
     <div className="inline-block">
@@ -60,5 +62,10 @@ const Logo = ({ width = 40, height = 40, isLogo = true }) => {
     </div>
   );
 };
+Logo.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  isLogo: PropTypes.bool,
+};
 
-export default Logo;
+export { Logo };

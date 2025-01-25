@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import { useFirebase } from "../context/firebase";
-import Logo from "../components/Logo";
+import { Logo } from "../components/Logo";
 
 const Register = () => {
   const navigate = useNavigate();
