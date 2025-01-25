@@ -102,29 +102,43 @@ const ExpenseList = ({ timeFrame }) => {
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="relative">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead className="bg-secondary text-white font-header text-sm md:text-base">
+            <div
+              className="overflow-y-auto custom-scrollbar dark:dark-custom-scrollbar"
+              style={{ height: "400px" }}
+            >
+              <table className="w-full text-left bg-white dark:bg-slate-950">
+                <thead className="bg-secondary dark:bg-dark_secondary text-white dark:text-slate-950 font-header text-sm md:text-base">
                   <tr>
-                    <th className="sticky top-0 p-3 md:p-4 w-12">#</th>
-                    <th className="sticky top-0 p-3 md:p-4">Description</th>
-                    <th className="sticky top-0 p-3 md:p-4 w-32">Amount</th>
-                    <th className="sticky top-0 hidden md:table-cell p-4 w-48">
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary p-3 md:p-4 w-12">
+                      #
+                    </th>
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary p-3 md:p-4">
+                      Description
+                    </th>
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary p-3 md:p-4 w-32">
+                      Amount
+                    </th>
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary hidden md:table-cell p-4 w-48">
                       Date
                     </th>
-                    <th className="sticky top-0 p-3 md:p-4 w-24">Actions</th>
-                    <th className="sticky top-0 p-3 md:p-4 w-12">
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary p-3 md:p-4 w-24">
+                      Actions
+                    </th>
+                    <th className="sticky top-0 bg-secondary dark:bg-dark_secondary p-3 md:p-4 w-12">
                       <div className="relative group">
                         <button
                           onClick={loadExpenses}
-                          className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                          className="p-2 rounded-lg hover:bg-white/10 dark:hover:bg-dark_secondary transition-colors"
                           disabled={loading}
                           aria-label="Refresh Data"
                         >
                           {loading ? (
                             <Loader2 className="animate-spin w-5 h-5" />
                           ) : (
-                            <RefreshCw strokeWidth={1.5} className="w-5 h-5" />
+                            <RefreshCw
+                              strokeWidth={1.5}
+                              className="w-5 h-5 dark:text-dark_background"
+                            />
                           )}
                         </button>
                         <div className="absolute right-0 mt-2 py-1 px-2 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
@@ -134,13 +148,13 @@ const ExpenseList = ({ timeFrame }) => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="font-content text-sm md:text-base divide-y divide-gray-100">
+                <tbody className="font-content text-sm md:text-base divide-y divide-gray-100 bg-white dark:bg-slate-950">
                   {loading ? (
                     <tr>
                       <td colSpan="6" className="p-4 text-center">
-                        <div className="flex justify-center items-center">
-                          <Loader2 className="animate-spin h-6 w-6 text-secondary" />
-                          <span className="ml-2 text-gray-500">
+                        <div className="flex justify-center items-center min-h-[300px]">
+                          <Loader2 className="animate-spin w-6 text-secondary dark:text-dark_secondary mr-2" />
+                          <span className="text-gray-500 dark:text-gray-400">
                             Loading expenses...
                           </span>
                         </div>
@@ -148,14 +162,20 @@ const ExpenseList = ({ timeFrame }) => {
                     </tr>
                   ) : expenses.length === 0 ? (
                     <tr>
-                      <td colSpan="6" className="p-4 text-center text-gray-500">
+                      <td
+                        colSpan="6"
+                        className="p-4 text-center text-gray-500 dark:text-gray-400"
+                      >
                         No expenses found for this time period.
                       </td>
                     </tr>
                   ) : (
                     expenses.map((expense, index) => (
-                      <tr key={expense.id} className="hover:bg-gray-50">
-                        <td className="p-3 md:p-4">{index + 1}</td>
+                      <tr
+                        key={expense.id}
+                        className="hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-950 dark:text-gray-200"
+                      >
+                        <td className="p-3 md:p-4 ">{index + 1}</td>
                         <td className="p-3 md:p-4">{expense.description}</td>
                         <td className="p-3 md:p-4">
                           ${expense.amount.toFixed(2)}
@@ -167,7 +187,7 @@ const ExpenseList = ({ timeFrame }) => {
                           <div className="flex space-x-2">
                             <button
                               type="button"
-                              className="text-secondary hover:text-hover_secondary"
+                              className="text-secondary dark:text-dark_secondary hover:text-hover_secondary dark:hover:text-dark_hover_secondary"
                               onClick={() => handleEditExpense(expense)}
                             >
                               <Edit
@@ -177,7 +197,7 @@ const ExpenseList = ({ timeFrame }) => {
                             </button>
                             <button
                               type="button"
-                              className="text-secondary hover:text-hover_secondary"
+                              className="text-secondary dark:text-dark_secondary hover:text-hover_secondary dark:hover:text-dark_hover_secondary"
                               onClick={() => handleDeleteExpense(expense.id)}
                             >
                               <Trash

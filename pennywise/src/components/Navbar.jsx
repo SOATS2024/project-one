@@ -38,7 +38,7 @@ const Navbar = ({ isWelcome }) => {
       <div className="flex flex-row items-center justify-center">
         <Logo height={60} width={60} />
         <div className="font-pennywise text-text dark:text-gray-200 text-3xl font-bold">
-          enny{" "}
+          enny
           <span className="text-secondary dark:text-dark_secondary">Wise</span>
         </div>
       </div>

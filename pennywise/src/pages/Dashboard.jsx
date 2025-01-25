@@ -125,11 +125,11 @@ const Dashboard = () => {
           )}
 
           <header className="space-y-2">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 font-header">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-gray-200 font-header">
               {timeFrames.find((f) => f.id === activeTimeFrame)?.text ||
                 "Dashboard"}
             </h1>
-            <p className="text-sm md:text-base text-gray-600 font-content">
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-content">
               Welcome back, {user.displayName || "User"}
             </p>
           </header>

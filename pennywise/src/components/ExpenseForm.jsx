@@ -80,7 +80,7 @@ const ExpenseForm = ({
   };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg mb-4 md:mb-5 px-4 md:px-7 py-6 md:py-8 gap-4 md:gap-5 rounded-lg w-full">
+    <div className="flex flex-col bg-white dark:bg-slate-950 shadow-lg mb-4 md:mb-5 px-4 md:px-7 py-6 md:py-8 gap-4 md:gap-5 rounded-lg w-full">
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
           {error}
@@ -90,7 +90,7 @@ const ExpenseForm = ({
         <div className="flex flex-col w-full gap-1">
           <label
             htmlFor="description"
-            className="block text-sm md:text-base font-medium text-text font-header uppercase"
+            className="block text-sm md:text-base font-medium text-text dark:text-gray-200 font-header uppercase"
           >
             Description
           </label>
@@ -103,13 +103,13 @@ const ExpenseForm = ({
             disabled={loading}
             required
             placeholder="Enter Description"
-            className="block border border-gray-300 rounded-md text-base md:text-lg mb-2 md:mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="block border border-gray-300 dark:border-gray-200 dark:bg-slate-950 rounded-md text-base md:text-lg mb-2 md:mb-4 placeholder-gray-500 dark:placeholder-gray-200 px-3 py-2 text-text dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-primary dark:focus:ring-dark_primary focus:border-primary dark:focus:border-dark_primary font-content w-full disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
         <div className="flex flex-col w-full gap-1">
           <label
             htmlFor="amount"
-            className="block text-sm md:text-base font-medium text-text font-header uppercase"
+            className="block text-sm md:text-base font-medium text-text dark:text-gray-200 font-header uppercase"
           >
             Amount
           </label>
@@ -124,7 +124,7 @@ const ExpenseForm = ({
             disabled={loading}
             required
             placeholder="Enter Amount"
-            className="block border border-gray-300 rounded-md text-base md:text-lg mb-2 md:mb-4 placeholder-gray-500 px-3 py-2 text-text focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary font-content w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="block border border-gray-300 dark:border-gray-200 dark:bg-slate-950 rounded-md text-base md:text-lg mb-2 md:mb-4 placeholder-gray-500 dark:placeholder-gray-200 px-3 py-2 text-text dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-primary dark:focus:ring-dark_primary focus:border-primary dark:focus:border-dark_primary font-content w-full disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
       </div>
@@ -133,7 +133,7 @@ const ExpenseForm = ({
           type="button"
           onClick={handleAddOrUpdateExpense}
           disabled={loading}
-          className={`bg-secondary px-6 md:px-10 py-2.5 md:py-3 rounded-md font-bold text-white hover:bg-hover_secondary font-content text-base md:text-lg w-full flex items-center justify-center gap-2 transition-all duration-200 ${
+          className={`bg-secondary dark:bg-dark_secondary px-6 md:px-10 py-2.5 md:py-3 rounded-md font-bold text-white dark:text-slate-950 hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-content text-base md:text-lg w-full flex items-center justify-center gap-2 transition-all duration-200 ${
             loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

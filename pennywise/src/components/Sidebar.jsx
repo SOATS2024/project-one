@@ -47,9 +47,9 @@ export const Sidebar = ({ children, logo, user }) => {
       {isMobile && !isOpen && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-white shadow-md hover:bg-gray-50"
+          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-white dark:bg-slate-950 shadow-md hover:bg-gray-50 dark:hover:bg-slate-800"
         >
-          <Menu className="w-6 h-6 text-gray-600" />
+          <Menu className="w-6 h-6 text-gray-600 dark:text-gray-200" />
         </button>
       )}
 
@@ -74,34 +74,41 @@ export const Sidebar = ({ children, logo, user }) => {
           h-screen transition-all duration-300 ease-in-out
         `}
       >
-        <nav className="h-full flex flex-col bg-white border-r shadow-lg">
+        <nav className="h-full flex flex-col bg-white dark:bg-slate-950 border-r shadow-lg">
           {/* Header */}
           <div className="p-4 pb-2 flex justify-between items-center">
             <div
               className={`
                 overflow-hidden transition-all
                 ${expanded || isMobile ? "w-34" : "w-0"}
-                flex items-center gap-2
+                flex items-center 
               `}
             >
               {logo}
-              <span className="font-pennywise text-lg">
-                enny<span className="text-secondary">Wise</span>
+              <span className="font-pennywise text-lg dark:text-gray-200">
+                enny
+                <span className="text-secondary dark:text-dark_secondary">
+                  Wise
+                </span>
               </span>
             </div>
             {isMobile ? (
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-gray-100"
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-600"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-5 h-5 text-gray-600 dark:text-gray-200" />
               </button>
             ) : (
               <button
                 onClick={toggleSidebar}
-                className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+                className="p-1.5 rounded-lg bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-600"
               >
-                {expanded ? <X /> : <Menu />}
+                {expanded ? (
+                  <X className="dark:text-gray-200" />
+                ) : (
+                  <Menu className="dark:text-gray-200" />
+                )}
               </button>
             )}
           </div>
@@ -131,10 +138,10 @@ export const Sidebar = ({ children, logo, user }) => {
                     ${expanded || isMobile ? "w-52 ml-3" : "w-0"}
                   `}
                 >
-                  <h4 className="font-semibold truncate">
+                  <h4 className="font-semibold truncate dark:text-gray-200">
                     {user.displayName || "User"}
                   </h4>
-                  <span className="text-xs text-gray-600 truncate block">
+                  <span className="text-xs text-gray-600 dark:text-gray-400 truncate block">
                     {user.email}
                   </span>
                 </div>

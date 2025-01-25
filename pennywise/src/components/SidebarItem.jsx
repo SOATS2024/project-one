@@ -20,8 +20,8 @@ const SidebarItem = ({
         transition-colors group
         ${
           active
-            ? "bg-gradient-to-tr bg-primary text-white"
-            : "hover:bg-background text-gray-600"
+            ? "bg-gradient-to-tr bg-primary dark:bg-dark_primary text-white dark:text-slate-950"
+            : "hover:bg-background dark:hover:bg-dark_background text-gray-600 dark:text-gray-400"
         }
     `}
     >
@@ -45,7 +45,7 @@ const SidebarItem = ({
         <div
           className={`
           absolute left-full rounded-md px-2 py-1 ml-6
-          bg-primary text-white text-sm
+          bg-primary dark:bg-dark_primary text-white dark:text-slate-950 text-sm
           invisible opacity-20 -translate-x-3 transition-all
           group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
           z-50 text-nowrap
