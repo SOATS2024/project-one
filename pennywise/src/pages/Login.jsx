@@ -205,7 +205,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading || loginAttempts >= MAX_ATTEMPTS}
-                className={`bg-secondary dark:bg-dark_secondary w-full text-white font-medium rounded-md py-2 hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-header ${
+                className={`bg-secondary dark:bg-dark_secondary w-full text-white dark:text-slate-950 font-medium rounded-md py-2 hover:bg-hover_secondary dark:hover:bg-dark_hover_secondary font-header ${
                   loading || loginAttempts >= MAX_ATTEMPTS
                     ? "opacity-50 cursor-not-allowed"
                     : ""

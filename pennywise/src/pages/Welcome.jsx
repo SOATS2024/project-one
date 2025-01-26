@@ -6,7 +6,7 @@ import { FooterSection } from "../components/Welcome/FooterSection";
 
 const Welcome = () => {
   return (
-    <div className="min-h-screen bg-background dark:bg-dark_background">
+    <div className="min-h-screen bg-background dark:bg-dark_background transition-colors duration-300">
       <Navbar isWelcome={true} />
       <HeroSection />
       <Features />

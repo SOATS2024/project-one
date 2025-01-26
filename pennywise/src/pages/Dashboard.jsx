@@ -11,10 +11,11 @@ import {
   Clock,
   CalendarDays,
   CalendarRange,
-  Settings,
   LifeBuoy,
   LogOut,
   Loader2,
+  Moon,
+  Sun,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -24,6 +25,24 @@ const Dashboard = () => {
   const [activeTimeFrame, setActiveTimeFrame] = useState("today");
   const [user, setUser] = useState(null);
   const [selectedExpense, setSelectedExpense] = useState(null);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (darkMode) {
+      htmlElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      htmlElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   useEffect(() => {
     if (firebase.currentUser) {
@@ -103,7 +122,11 @@ const Dashboard = () => {
           />
         ))}
         <hr className="my-3" />
-        <SidebarItem icon={<Settings size={20} />} text="Settings" />
+        <SidebarItem
+          icon={darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          text={darkMode ? "Toggle Light Mode" : "Toggle Dark Mode"}
+          onClick={toggleDarkMode}
+        />
         <SidebarItem
           icon={<LifeBuoy size={20} />}
           text="Help"

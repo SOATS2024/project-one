@@ -102,10 +102,7 @@ const ExpenseList = ({ timeFrame }) => {
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="relative">
-            <div
-              className="overflow-y-auto custom-scrollbar dark:dark-custom-scrollbar"
-              style={{ height: "400px" }}
-            >
+            <div className="overflow-y-auto custom-scrollbar h-[200px] md:h-[400px] dark:dark-custom-scrollbar">
               <table className="w-full text-left bg-white dark:bg-slate-950">
                 <thead className="bg-secondary dark:bg-dark_secondary text-white dark:text-slate-950 font-header text-sm md:text-base">
                   <tr>
@@ -162,11 +159,12 @@ const ExpenseList = ({ timeFrame }) => {
                     </tr>
                   ) : expenses.length === 0 ? (
                     <tr>
-                      <td
-                        colSpan="6"
-                        className="p-4 text-center text-gray-500 dark:text-gray-400"
-                      >
-                        No expenses found for this time period.
+                      <td colSpan="6" className="p-4 text-center">
+                        <div className="flex justify-center items-center min-h-[300px]">
+                          <span className="text-gray-500 dark:text-gray-400">
+                            No Expenses found for this time frame.
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ) : (
