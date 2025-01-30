@@ -61,6 +61,7 @@ const Register = () => {
     setLoading(true);
     try {
       await firebase.signUpWithEmail(email, password, username);
+      navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
       if (error.code === "auth/email-already-in-use") {
@@ -75,6 +76,7 @@ const Register = () => {
     } finally {
       setLoading(false);
     }
+
   };
 
   const handleGoogle = async () => {

@@ -92,6 +92,10 @@ const Login = () => {
     navigate("/register");
   };
 
+  const routetoPasswordReset = () => {
+    navigate("/password-reset");
+  };
+
   return (
     <div className="flex justify-center items-center bg-background min-h-screen">
       <div className="max-w-md py-6 px-5 w-full rounded-lg shadow-lg bg-white">
@@ -191,6 +195,7 @@ const Login = () => {
                 </label>
               </div>
               <button
+                onClick={routetoPasswordReset}
                 type="button"
                 disabled={loading}
                 className="text-secondary underline hover:cursor-pointer hover:text-hover_secondary font-header"

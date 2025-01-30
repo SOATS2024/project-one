@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import PropTypes from "prop-types";
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -216,6 +218,15 @@ export const FirebaseProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      throw error;
+    }
+  };
+
   const withGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -263,6 +274,7 @@ export const FirebaseProvider = ({ children }) => {
     loading,
     signUpWithEmail,
     signInWithEmail,
+    forgotPassword,
     withGoogle,
     logOut,
     addExpense,
@@ -287,4 +299,8 @@ export const useFirebase = () => {
     throw new Error("useFirebase must be used within a FirebaseProvider");
   }
   return context;
+};
+
+FirebaseProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
