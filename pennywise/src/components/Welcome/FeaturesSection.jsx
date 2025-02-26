@@ -1,6 +1,7 @@
 import { ContentTile } from "../ContentTile";
 import { PiggyBank, CalendarDays, ShieldCheck } from "lucide-react";
 import { Logo } from "../Logo";
+import featuresImage from "../../assets/features_image.jpg";
 
 const Features = () => {
   return (
@@ -8,8 +9,8 @@ const Features = () => {
       <div className="flex flex-col md:flex-row items-center gap-12 ">
         <div className="w-full md:w-1/3 rounded-mg overflow-hidden">
           <img
-            src="../../public/assets/features_image.jpg"
-            alt="features image"
+            src={featuresImage}
+            alt="Features Image"
             className="md:h-[550px] h-full w-full object-cover rounded-3xl shadow-lg"
           />
         </div>

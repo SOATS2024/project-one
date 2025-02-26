@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 const ContactUs = () => {
@@ -16,7 +15,7 @@ const ContactUs = () => {
     formData.append("access_key", import.meta.env.VITE_APP_WEBFORM_ACCESS_KEY);
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: formData
+      body: formData,
     });
     const data = await response.json();
     if (data.success) {
@@ -50,7 +49,7 @@ const ContactUs = () => {
             <p>11, Street 342, Abcd Fgh</p>
           </div>
         </div>
-        
+
         {/* Social media Icons */}
         <div className="flex space-x-4 mt-6">
           <a href="#" className="text-xl hover:text-gray-300">
@@ -68,7 +67,7 @@ const ContactUs = () => {
         </div>
       </div>
       {/* Right Section */}
-      
+
       <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg">
         <form onSubmit={onSubmit}>
           <div className="mb-4">

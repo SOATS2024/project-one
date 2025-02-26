@@ -106,11 +106,6 @@ const Dashboard = () => {
         logo={<Logo width={40} height={40} />}
         user={user}
       >
-        <SidebarItem
-          icon={<LayoutDashboard size={20} />}
-          text="Dashboard"
-          active={true}
-        />
         <hr className="my-3" />
         {timeFrames.map((frame) => (
           <SidebarItem
@@ -148,13 +143,13 @@ const Dashboard = () => {
           )}
 
           <header className="space-y-2">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-gray-200 font-header">
+            <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-gray-200 font-header tracking-wider">
+              Dashboard
+            </h1>
+            <h2 className="text-lg md:text-base lg:text-lg font-bold text-gray-800 dark:text-gray-400 font-header">
               {timeFrames.find((f) => f.id === activeTimeFrame)?.text ||
                 "Dashboard"}
-            </h1>
-            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-content">
-              Welcome back, {user.displayName || "User"}
-            </p>
+            </h2>
           </header>
 
           <div className="grid grid-cols-1  gap-6">

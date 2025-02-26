@@ -92,13 +92,19 @@ const ExpenseList = ({ timeFrame }) => {
               />
             </div>
           )}
-          <div className="lg:col-span-1">
+          <div
+            className={
+              timeFrame === "today" ? "lg:col-span-1" : "lg:col-span-2"
+            }
+          >
             <ExpenseSummaryCard
               expenses={expenses}
               calculateTotal={calculateTotal}
             />
           </div>
         </div>
+
+        <div className={timeFrame === "today" ? "" : "h-5"}></div>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="relative">
