@@ -5,6 +5,7 @@ import { ExpenseList } from "../components/ExpenseList";
 import { Sidebar } from "../components/Sidebar";
 import { SidebarItem } from "../components/SidebarItem";
 import { Logo } from "../components/Logo";
+import { ContactUs } from "../components/ContactUs";
 import {
   LayoutDashboard,
   Calendar,
@@ -16,7 +17,9 @@ import {
   Loader2,
   Moon,
   Sun,
+  Contact,
 } from "lucide-react";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -27,7 +30,16 @@ const Dashboard = () => {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
+    
   );
+  const [showHelp, setShowHelp] = useState(false);
+
+  const handleHelpClick = () => {
+    setShowHelp(!showHelp);
+    
+    console.log("showHelp state:", showHelp);
+  };
+
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -125,7 +137,7 @@ const Dashboard = () => {
         <SidebarItem
           icon={<LifeBuoy size={20} />}
           text="Help"
-          onClick={() => navigate("/contact")}
+          onClick={handleHelpClick}
         />
         <SidebarItem
           icon={<LogOut size={20} />}
@@ -152,7 +164,10 @@ const Dashboard = () => {
             </h2>
           </header>
 
-          <div className="grid grid-cols-1  gap-6">
+          {showHelp ? 
+          <ContactUs/> :
+
+            <div className="grid grid-cols-1  gap-6">
             <div className="lg:col-span-2">
               <ExpenseList
                 timeFrame={activeTimeFrame}
@@ -161,9 +176,16 @@ const Dashboard = () => {
               />
             </div>
           </div>
+          }
+          
+
+          
         </div>
       </main>
+      
+
     </div>
+
   );
 };
 
