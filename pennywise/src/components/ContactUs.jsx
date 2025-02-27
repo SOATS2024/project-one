@@ -27,77 +27,73 @@ const ContactUs = () => {
     }
   };
   return (
-   
-      
-     
-     
-
-      <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg">
-        <form onSubmit={onSubmit}>
-          <h2 className="text-2xl font-header font-bold mb-4">Send us a message</h2>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block font-semibold mb-2 font-header"
-            >
-              Your name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none  focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
-              placeholder="Your name"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block font-semibold mb-2 font-header"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="block font-semibold mb-2 font-header"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows="4"
-              name="message"
-              required
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 font-content disabled:opacity-50"
-              placeholder="Type your message here"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full font-header bg-secondary text-white py-3 rounded-lg hover:bg-hover_secondary"
+    <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg dark:bg-slate-950">
+      <form onSubmit={onSubmit}>
+        <h2 className="text-2xl font-header font-bold mb-4 dark:text-gray-200">
+          Send us a message
+        </h2>
+        <div className="mb-4">
+          <label
+            htmlFor="name"
+            className="block font-semibold mb-2 font-header dark:text-gray-200"
           >
-            SEND MESSAGE
-          </button>
-        </form>
-      </div>
-   
+            Your name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="username"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            placeholder="Your name"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block font-semibold mb-2 font-header dark:text-gray-200"
+          >
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            placeholder="Email Address"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="message"
+            className="block font-semibold mb-2 font-header dark:text-gray-200"
+          >
+            Message
+          </label>
+          <textarea
+            id="message"
+            rows="4"
+            name="message"
+            required
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            placeholder="Type your message here"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          className="w-full font-header bg-secondary text-white py-3 rounded-lg hover:bg-hover_secondary"
+        >
+          SEND MESSAGE
+        </button>
+      </form>
+    </div>
   );
 };
 export { ContactUs };

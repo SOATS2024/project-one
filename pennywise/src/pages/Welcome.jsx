@@ -5,14 +5,13 @@ import { AboutSection } from "../components/Welcome/AboutSection";
 import { ContactSection } from "../components/Welcome/ContactSection";
 import { FooterSection } from "../components/Welcome/FooterSection";
 
-
 const Welcome = () => {
   return (
     <div className="min-h-screen bg-background dark:bg-dark_background transition-colors duration-300">
       <Navbar isWelcome={true} />
       <HeroSection />
       <Features />
-      <AboutSection />
+      {/* <AboutSection /> */}
       <ContactSection />
       <FooterSection />
     </div>
