@@ -2,7 +2,9 @@ import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/Welcome/HeroSection";
 import { Features } from "../components/Welcome/FeaturesSection";
 import { AboutSection } from "../components/Welcome/AboutSection";
+import { ContactSection } from "../components/Welcome/ContactSection";
 import { FooterSection } from "../components/Welcome/FooterSection";
+
 
 const Welcome = () => {
   return (
@@ -11,6 +13,7 @@ const Welcome = () => {
       <HeroSection />
       <Features />
       <AboutSection />
+      <ContactSection />
       <FooterSection />
     </div>
   );

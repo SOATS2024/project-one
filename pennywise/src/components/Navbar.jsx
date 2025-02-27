@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import { Moon, Sun } from "lucide-react";
 import { Logo } from "./Logo";
 import PropTypes from "prop-types";
+
 
 const Navbar = ({ isWelcome }) => {
   const [darkMode, setDarkMode] = useState(
@@ -26,7 +28,7 @@ const Navbar = ({ isWelcome }) => {
   };
 
   const handleContactUs = () => {
-    navigate("/contact");
+    navigate("#contact");
   };
 
   const toggleDarkMode = () => {
@@ -57,13 +59,13 @@ const Navbar = ({ isWelcome }) => {
           </div>
         </button>
         <div class="h-full w-0.5  bg-neutral-100 dark:bg-white/10"></div>
-        <button
+        <HashLink
           type="button"
           className="bg-white dark:bg-slate-950 px-4 py-1.5 rounded-md text-primary dark:text-dark_primary border-2 border-primary dark:border-dark_primary text-base font-medium hover:bg-background dark:hover:bg-slate-950 dark:hover:border-dark_hover_secondary dark:hover:text-dark_hover_secondary font-content"
-          onClick={handleContactUs}
+          to={"#contact"}
         >
           Contact Us
-        </button>
+        </HashLink>
         {isWelcome && (
           <button
             type="button"
