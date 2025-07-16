@@ -5,34 +5,33 @@ import featuresImage from "../../assets/features_image.jpg";
 
 const Features = () => {
   return (
-    <section className="bg-white dark:bg-slate-950 mx-auto container px-6 md:px-12 lg:px-20 py-16 rounded-lg">
-      <div className="flex flex-col md:flex-row items-center gap-12 ">
-        <div className="w-full md:w-1/3 rounded-mg overflow-hidden">
+    <section className="bg-white dark:bg-slate-950 mx-auto container px-4 sm:px-6 md:px-12 lg:px-20 py-12 md:py-16 shadow-md">
+      <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="w-full lg:w-1/3 rounded-mg overflow-hidden">
           <img
             src={featuresImage}
             alt="Features Image"
-            className="md:h-[550px] h-full w-full object-cover rounded-3xl shadow-lg"
+            className="h-[300px] sm:h-[400px] md:h-[500px] w-full object-cover rounded-3xl shadow-lg"
           />
         </div>
-        <div className="w-full md:w-2/3 text-center md:text-left">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-200 flex items-center gap-2">
+        <div className="w-full lg:w-2/3 text-center lg:text-left mt-8 lg:mt-0">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary dark:text-dark_primary flex flex-wrap justify-center lg:justify-start items-center gap-2">
             What{" "}
             <div className="inline-flex items-center justify-center font-pennywise">
-              <span className="flex items-center justify-center ">
-                <Logo height={70} width={70} />
+              <span className="flex items-center justify-center">
+                <Logo height={50} width={50}  />
               </span>
               enny
-              <span className="text-primary dark:text-dark_primary">
+              <span className="text-secondary dark:text-dark_secondary">
                 Wise
               </span>{" "}
             </div>
             Offers
           </h2>
-          <p className="text-gray-400 mt-4 max-w-2xl mx-auto md:mx-0">
-            The time is now for it to be okay to be great. People in this world
-            shun people for being great. For being a bright color.
+          <p className="text-gray-600 dark:text-gray-300 mt-4 max-w-2xl mx-auto lg:mx-0">
+            With PennyWise, you can easily manage your finances, stay on top of your spending, and achieve your financial goals.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-8 md:mt-12">
             <ContentTile
               icon={CalendarDays}
               title="Daily, Weekly, Monthly Tracking"

@@ -1,53 +1,43 @@
 import React from "react";
 import { ContactUs } from "../ContactUs";
+import { Phone, Mail, MapPin, Globe, Facebook, Instagram, Twitter } from "lucide-react";
 
 function ContactSection() {
   return (
     <div
       id="contact"
-      className="flex flex-col md:flex-row justify-between items-center bg-background dark:bg-dark_background text-text p-8 md:p-12"
+      className="flex flex-col lg:flex-row justify-between items-center bg-background dark:bg-dark_background text-text dark:text-dark_text p-6 sm:p-8 md:p-12 lg:p-16 rounded-lg shadow-md mx-auto container mt-12 mb-0"
     >
       {/* Left Section */}
-      <div className="w-full md:w-1/2 mb-8 md:mb-0 font-content">
-        <h2 className="text-3xl  font-header font-bold mb-4 dark:text-gray-200">
+      <div className="w-full lg:w-1/2 mb-8 lg:mb-0 font-content">
+        <h2 className="text-2xl sm:text-3xl font-header font-bold mb-4 text-primary dark:text-dark_primary">
           Contact Us
         </h2>
-        <p className="mb-6 dark:text-gray-300">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At fugiat
-          dicta iusto reprehenderit eum nihil similique.
+        <p className="mb-6 text-gray-600 dark:text-gray-300 max-w-md">
+          Interested in our work? Send us a message and we'll work on your dream website. Together!
         </p>
-        <div className="space-y-4">
-          <div className="flex items-center">
-            <span className="text-xl mr-4">📞</span>
-            <p className="text-gray-300">+1 (123) 456 7890</p>
+        <div className="space-y-6">
+          
+          <div className="flex items-center group hover:translate-x-2 transition-transform duration-300">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary dark:bg-dark_secondary text-white mr-4">
+              <Mail className="h-5 w-5" />
+            </div>
+            <p className="text-gray-700 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-dark_primary transition-colors duration-300">soats2024@gmail.com</p>
           </div>
-          <div className="flex items-center">
-            <span className="text-xl mr-4">✉</span>
-            <p className="text-gray-300">contact@xyzwebsite.com</p>
-          </div>
-          <div className="flex items-center">
-            <span className="text-xl mr-4">📍</span>
-            <p className="text-gray-300">11, Street 342, Abcd Fgh</p>
+          <div className="flex items-center group hover:translate-x-2 transition-transform duration-300">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary dark:bg-dark_secondary text-white mr-4">
+              <MapPin className="h-5 w-5" />
+            </div>
+            <p className="text-gray-700 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-dark_primary transition-colors duration-300">Hyderabad, Sindh, Pakistan</p>
           </div>
         </div>
 
-        {/* Social media Icons */}
-        <div className="flex space-x-4 mt-6">
-          <a href="#" className="text-xl hover:text-gray-300">
-            🌐
-          </a>
-          <a href="#" className="text-xl hover:text-gray-300">
-            📘
-          </a>
-          <a href="#" className="text-xl hover:text-gray-300">
-            📸
-          </a>
-          <a href="#" className="text-xl hover:text-gray-300">
-            🕊
-          </a>
-        </div>
       </div>
-      <ContactUs />
+
+      {/* Right Section - Contact Form */}
+      <div className="w-full lg:w-1/2 lg:pl-8">
+        <ContactUs />
+      </div>
     </div>
   );
 }

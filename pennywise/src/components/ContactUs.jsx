@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Send } from "lucide-react";
 
 const ContactUs = () => {
   const [username, setUsername] = useState("");
@@ -27,15 +28,20 @@ const ContactUs = () => {
     }
   };
   return (
-    <div className="w-full md:w-1/2 bg-white text-gray-800 p-8 rounded-lg shadow-lg dark:bg-slate-950">
+    <div className="w-full bg-white dark:bg-slate-950 p-6 sm:p-8 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
       <form onSubmit={onSubmit}>
-        <h2 className="text-2xl font-header font-bold mb-4 dark:text-gray-200">
+        <h2 className="text-xl sm:text-2xl font-header font-bold mb-6 text-primary dark:text-dark_primary flex items-center gap-2">
           Send us a message
         </h2>
-        <div className="mb-4">
+        {result && (
+          <div className="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-md text-sm">
+            {result}
+          </div>
+        )}
+        <div className="mb-5">
           <label
             htmlFor="name"
-            className="block font-semibold mb-2 font-header dark:text-gray-200"
+            className="block font-semibold mb-2 font-header text-gray-700 dark:text-gray-300"
           >
             Your name
           </label>
@@ -46,14 +52,14 @@ const ContactUs = () => {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark_primary focus:border-transparent font-content disabled:opacity-50 dark:bg-slate-800 transition-all duration-300"
             placeholder="Your name"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-5">
           <label
             htmlFor="email"
-            className="block font-semibold mb-2 font-header dark:text-gray-200"
+            className="block font-semibold mb-2 font-header text-gray-700 dark:text-gray-300"
           >
             Email Address
           </label>
@@ -64,14 +70,14 @@ const ContactUs = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark_primary focus:border-transparent font-content disabled:opacity-50 dark:bg-slate-800 transition-all duration-300"
             placeholder="Email Address"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-6">
           <label
             htmlFor="message"
-            className="block font-semibold mb-2 font-header dark:text-gray-200"
+            className="block font-semibold mb-2 font-header text-gray-700 dark:text-gray-300"
           >
             Message
           </label>
@@ -82,14 +88,15 @@ const ContactUs = () => {
             required
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 pr-4 border border-gray-300 dark:border-gray-200 placeholder-gray-500 dark:placeholder-gray-200 text-text dark:text-gray-200 focus:outline-none focus:border-primary dark:focus:border-dark_primary focus:ring-primary dark:focus:ring-dark_primary focus:ring-1 font-content disabled:opacity-50 dark:bg-slate-950"
+            className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark_primary focus:border-transparent font-content disabled:opacity-50 dark:bg-slate-800 transition-all duration-300"
             placeholder="Type your message here"
           ></textarea>
         </div>
         <button
           type="submit"
-          className="w-full font-header bg-secondary text-white py-3 rounded-lg hover:bg-hover_secondary"
+          className="w-full font-header bg-secondary text-white py-3 px-4 rounded-lg hover:bg-hover_secondary transition-colors duration-300 flex items-center justify-center gap-2"
         >
+          <Send className="h-4 w-4" />
           SEND MESSAGE
         </button>
       </form>
